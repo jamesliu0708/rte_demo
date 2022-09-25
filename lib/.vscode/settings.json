@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "malloc_elem.h": "c",
+        "rte_eal_memconfig.h": "c",
+        "rte_errno.h": "c",
+        "rte_per_lcore.h": "c",
+        "rte_lcore.h": "c",
+        "rte_eal.h": "c"
+    }
+}
