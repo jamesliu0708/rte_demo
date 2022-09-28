@@ -20,9 +20,6 @@
 #include <sys/mman.h>
 #include <sys/queue.h>
 #include <sys/stat.h>
-#if defined(RTE_ARCH_X86)
-#include <sys/io.h>
-#endif
 
 #include <rte_common.h>
 #include <rte_debug.h>
@@ -36,12 +33,9 @@
 #include <rte_cycles.h>
 #include <rte_string_fns.h>
 #include <rte_cpuflags.h>
-#include <rte_dev.h>
-#include <rte_devargs.h>
 #include <rte_version.h>
 #include <rte_atomic.h>
 #include <malloc_heap.h>
-#include <rte_vfio.h>
 
 #include "eal_private.h"
 #include "eal_thread.h"
@@ -49,7 +43,6 @@
 #include "eal_filesystem.h"
 #include "eal_hugepages.h"
 #include "eal_options.h"
-#include "eal_vfio.h"
 
 #define MEMSIZE_IF_NO_HUGE_PAGE (64ULL * 1024ULL * 1024ULL)
 
@@ -395,12 +388,6 @@ eal_parse_base_virtaddr(const char *arg)
 	/* check for errors */
 	if ((errno != 0) || (arg[0] == '\0') || end == NULL || (*end != '\0'))
 		return -1;
-
-	/* make sure we don't exceed 32-bit boundary on 32-bit target */
-#ifndef RTE_ARCH_64
-	if (addr >= UINTPTR_MAX)
-		return -1;
-#endif
 
 	/* align the addr on 16M boundary, 16MB is the minimum huge page
 	 * size on IBM Power architecture. If the addr is aligned to 16MB,
