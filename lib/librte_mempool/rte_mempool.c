@@ -383,7 +383,6 @@ rte_mempool_populate_iova(struct rte_mempool *mp, char *vaddr,
 
 	memhdr->mp = mp;
 	memhdr->addr = vaddr;
-	memhdr->iova = iova;
 	memhdr->len = len;
 	memhdr->free_cb = free_cb;
 	memhdr->opaque = opaque;
