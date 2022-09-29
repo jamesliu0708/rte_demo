@@ -850,8 +850,6 @@ rte_mempool_free(struct rte_mempool *mp);
  *   A pointer to the mempool structure.
  * @param vaddr
  *   The virtual address of memory that should be used to store objects.
- * @param iova
- *   The IO address
  * @param len
  *   The length of memory in bytes.
  * @param free_cb
@@ -863,8 +861,8 @@ rte_mempool_free(struct rte_mempool *mp);
  *   On error, the chunk is not added in the memory list of the
  *   mempool and a negative errno is returned.
  */
-int rte_mempool_populate_iova(struct rte_mempool *mp, char *vaddr,
-	rte_iova_t iova, size_t len, rte_mempool_memchunk_free_cb_t *free_cb,
+int rte_mempool_populate_phy(struct rte_mempool *mp, char *vaddr,
+	size_t len, rte_mempool_memchunk_free_cb_t *free_cb,
 	void *opaque);
 
 /**

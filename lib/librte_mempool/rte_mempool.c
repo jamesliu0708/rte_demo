@@ -99,7 +99,7 @@ static unsigned optimize_object_size(unsigned obj_size)
 }
 
 static void
-mempool_add_elem(struct rte_mempool *mp, void *obj, rte_iova_t iova)
+mempool_add_elem(struct rte_mempool *mp, void *obj)
 {
 	struct rte_mempool_objhdr *hdr;
 	struct rte_mempool_objtlr *tlr __rte_unused;
@@ -107,7 +107,6 @@ mempool_add_elem(struct rte_mempool *mp, void *obj, rte_iova_t iova)
 	/* set mempool ptr in header */
 	hdr = RTE_PTR_SUB(obj, sizeof(*hdr));
 	hdr->mp = mp;
-	hdr->iova = iova;
 	STAILQ_INSERT_TAIL(&mp->elt_list, hdr, next);
 	mp->populated_size++;
 
@@ -328,8 +327,8 @@ rte_mempool_free_memchunks(struct rte_mempool *mp)
  * on error.
  */
 int
-rte_mempool_populate_iova(struct rte_mempool *mp, char *vaddr,
-	rte_iova_t iova, size_t len, rte_mempool_memchunk_free_cb_t *free_cb,
+rte_mempool_populate_phy(struct rte_mempool *mp, char *vaddr,
+	size_t len, rte_mempool_memchunk_free_cb_t *free_cb,
 	void *opaque)
 {
 	unsigned total_elt_sz;
@@ -397,11 +396,7 @@ rte_mempool_populate_iova(struct rte_mempool *mp, char *vaddr,
 
 	while (off + total_elt_sz <= len && mp->populated_size < mp->size) {
 		off += mp->header_size;
-		if (iova == RTE_BAD_IOVA)
-			mempool_add_elem(mp, (char *)vaddr + off,
-				RTE_BAD_IOVA);
-		else
-			mempool_add_elem(mp, (char *)vaddr + off, iova + off);
+			mempool_add_elem(mp, (char *)vaddr + off);
 		off += mp->elt_size + mp->trailer_size;
 		i++;
 	}
@@ -459,64 +454,6 @@ rte_mempool_populate_iova_tab(struct rte_mempool *mp, char *vaddr,
 		cnt += ret;
 	}
 	return cnt;
-}
-
-/* Populate the mempool with a virtual area. Return the number of
- * objects added, or a negative value on error.
- */
-int
-rte_mempool_populate_virt(struct rte_mempool *mp, char *addr,
-	size_t len, size_t pg_sz, rte_mempool_memchunk_free_cb_t *free_cb,
-	void *opaque)
-{
-	rte_iova_t iova;
-	size_t off, phys_len;
-	int ret, cnt = 0;
-
-	/* address and len must be page-aligned */
-	if (RTE_PTR_ALIGN_CEIL(addr, pg_sz) != addr)
-		return -EINVAL;
-	if (RTE_ALIGN_CEIL(len, pg_sz) != len)
-		return -EINVAL;
-
-	if (mp->flags & MEMPOOL_F_NO_PHYS_CONTIG)
-		return rte_mempool_populate_iova(mp, addr, RTE_BAD_IOVA,
-			len, free_cb, opaque);
-
-	for (off = 0; off + pg_sz <= len &&
-		     mp->populated_size < mp->size; off += phys_len) {
-
-		iova = rte_mem_virt2iova(addr + off);
-
-		if (iova == RTE_BAD_IOVA && rte_eal_has_hugepages()) {
-			ret = -EINVAL;
-			goto fail;
-		}
-
-		/* populate with the largest group of contiguous pages */
-		for (phys_len = pg_sz; off + phys_len < len; phys_len += pg_sz) {
-			rte_iova_t iova_tmp;
-
-			iova_tmp = rte_mem_virt2iova(addr + off + phys_len);
-
-			if (iova_tmp != iova + phys_len)
-				break;
-		}
-
-		ret = rte_mempool_populate_iova(mp, addr + off, iova,
-			phys_len, free_cb, opaque);
-		if (ret < 0)
-			goto fail;
-		/* no need to call the free callback for next chunks */
-		free_cb = NULL;
-		cnt += ret;
-	}
-
-	return cnt;
-
- fail:
-	rte_mempool_free_memchunks(mp);
-	return ret;
 }
 
 /* Default function to populate the mempool: allocate memory in memzones,
@@ -586,16 +523,11 @@ rte_mempool_populate_default(struct rte_mempool *mp)
 		else
 			iova = mz->iova;
 
-		if (rte_eal_has_hugepages())
-			ret = rte_mempool_populate_iova(mp, mz->addr,
-				iova, mz->len,
-				rte_mempool_memchunk_mz_free,
-				(void *)(uintptr_t)mz);
-		else
-			ret = rte_mempool_populate_virt(mp, mz->addr,
-				mz->len, pg_sz,
-				rte_mempool_memchunk_mz_free,
-				(void *)(uintptr_t)mz);
+		ret = rte_mempool_populate_phy(mp, mz->addr,
+			iova, mz->len,
+			rte_mempool_memchunk_mz_free,
+			(void *)(uintptr_t)mz);
+		
 		if (ret < 0) {
 			rte_memzone_free(mz);
 			goto fail;
@@ -661,7 +593,7 @@ rte_mempool_populate_anon(struct rte_mempool *mp)
 		return 0;
 	}
 
-	ret = rte_mempool_populate_virt(mp, addr, size, getpagesize(),
+	ret = rte_mempool_populate_phy(mp, addr, size, getpagesize(),
 		rte_mempool_memchunk_anon_free, addr);
 	if (ret == 0)
 		goto fail;
