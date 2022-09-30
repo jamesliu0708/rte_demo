@@ -14,7 +14,6 @@
 #include <rte_config.h>
 #include <rte_per_lcore.h>
 #include <rte_eal.h>
-#include <rte_launch.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,12 +34,6 @@ extern "C" {
 struct lcore_config {
 	unsigned detected;         /**< true if lcore was detected */
 	pthread_t thread_id;       /**< pthread identifier */
-	int pipe_master2slave[2];  /**< communication pipe with master */
-	int pipe_slave2master[2];  /**< communication pipe with master */
-	lcore_function_t * volatile f;         /**< function to call */
-	void * volatile arg;       /**< argument of function */
-	volatile int ret;          /**< return value of function */
-	volatile enum rte_lcore_state_t state; /**< lcore state */
 	unsigned socket_id;        /**< physical socket id for this lcore */
 	unsigned core_id;          /**< core number on socket for this lcore */
 	int core_index;            /**< relative index, starting from 0 */

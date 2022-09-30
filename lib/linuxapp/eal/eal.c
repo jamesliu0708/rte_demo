@@ -77,7 +77,7 @@ struct lcore_config lcore_config[RTE_MAX_LCORE];
 struct internal_config internal_config;
 
 /* Return user provided mbuf pool ops name */
-const char * __rte_experimental
+const char *
 rte_eal_mbuf_user_pool_ops(void)
 {
 	return internal_config.user_mbuf_pool_ops_name;
@@ -469,22 +469,6 @@ rte_eal_mcfg_complete(void)
 		rte_config.mem_config->magic = RTE_MAGIC;
 }
 
-/*
- * Request iopl privilege for all RPL, returns 0 on success
- * iopl() call is mostly for the i386 architecture. For other architectures,
- * return -1 to indicate IO privilege can't be changed in this way.
- */
-int
-rte_eal_iopl_init(void)
-{
-#if defined(RTE_ARCH_X86)
-	if (iopl(3) != 0)
-		return -1;
-#endif
-	return 0;
-}
-
-
 static void rte_eal_init_alert(const char *msg)
 {
 	fprintf(stderr, "EAL: FATAL: %s\n", msg);
@@ -573,7 +557,7 @@ rte_eal_init(int argc, char **argv)
 int __rte_experimental
 rte_eal_cleanup(void)
 {
-	rte_service_finalize();
+	// rte_service_finalize();
 	return 0;
 }
 

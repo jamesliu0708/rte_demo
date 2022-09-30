@@ -94,17 +94,6 @@ enum rte_lcore_role_t rte_eal_lcore_role(unsigned lcore_id);
 enum rte_proc_type_t rte_eal_process_type(void);
 
 /**
- * Request iopl privilege for all RPL.
- *
- * This function should be called by pmds which need access to ioports.
-
- * @return
- *   - On success, returns 0.
- *   - On failure, returns -1.
- */
-int rte_eal_iopl_init(void);
-
-/**
  * @warning
  * @b EXPERIMENTAL: this API may change without prior notice
  *
@@ -118,7 +107,7 @@ int rte_eal_iopl_init(void);
  * @return 0 Successfully released all internal EAL resources
  * @return -EFAULT There was an error in releasing all resources.
  */
-int __rte_experimental rte_eal_cleanup(void);
+int rte_eal_cleanup(void);
 
 /**
  * Check if a primary process is currently alive
@@ -224,7 +213,7 @@ static inline int rte_gettid(void)
  * @return
  *   returns user provided pool ops name.
  */
-const char * __rte_experimental
+const char *
 rte_eal_mbuf_user_pool_ops(void);
 
 /**

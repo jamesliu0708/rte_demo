@@ -23,7 +23,7 @@ rte_cpu_is_supported(void)
 {
 	/* This is generated at compile-time by the build system */
 	static const enum rte_cpu_flag_t compile_time_flags[] = {
-			RTE_COMPILE_TIME_CPUFLAGS
+			// RTE_COMPILE_TIME_CPUFLAGS
 	};
 	unsigned count = RTE_DIM(compile_time_flags), i;
 	int ret;
