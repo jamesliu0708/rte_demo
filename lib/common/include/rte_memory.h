@@ -71,7 +71,6 @@ typedef uint64_t phys_addr_t; /**< Physical address. */
  * Physical memory segment descriptor.
  */
 struct rte_memseg {
-	phys_addr_t phys_addr;  /**< deprecated - Start physical address. */
 	RTE_STD_C11
 	union {
 		void *addr;         /**< Start virtual address. */

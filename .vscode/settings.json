@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "malloc_elem.h": "c",
+        "rte_string_fns.h": "c",
+        "eal_options.h": "c"
+    }
+}

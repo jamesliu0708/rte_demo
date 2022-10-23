@@ -53,7 +53,6 @@ enum rte_proc_type_t {
 struct rte_config {
 	uint32_t master_lcore;       /**< Id of the master lcore */
 	uint32_t lcore_count;        /**< Number of available logical cores. */
-	uint32_t service_lcore_count;/**< Number of available service cores. */
 	enum rte_lcore_role_t lcore_role[RTE_MAX_LCORE]; /**< State of cores. */
 
 	/** Primary or secondary configuration */
@@ -127,38 +126,6 @@ int rte_eal_cleanup(void);
 int rte_eal_primary_proc_alive(const char *config_file_path);
 
 /**
- * Usage function typedef used by the application usage function.
- *
- * Use this function typedef to define and call rte_set_application_usage_hook()
- * routine.
- */
-typedef void	(*rte_usage_hook_t)(const char * prgname);
-
-/**
- * Add application usage routine callout from the eal_usage() routine.
- *
- * This function allows the application to include its usage message
- * in the EAL system usage message. The routine rte_set_application_usage_hook()
- * needs to be called before the rte_eal_init() routine in the application.
- *
- * This routine is optional for the application and will behave as if the set
- * routine was never called as the default behavior.
- *
- * @param usage_func
- *   The func argument is a function pointer to the application usage routine.
- *   Called function is defined using rte_usage_hook_t typedef, which is of
- *   the form void rte_usage_func(const char * prgname).
- *
- *   Calling this routine with a NULL value will reset the usage hook routine and
- *   return the current value, which could be NULL.
- * @return
- *   - Returns the current value of the rte_application_usage pointer to allow
- *     the caller to daisy chain the usage routines if needing more then one.
- */
-rte_usage_hook_t
-rte_set_application_usage_hook(rte_usage_hook_t usage_func);
-
-/**
  * macro to get the lock of tailq in mem_config
  */
 #define RTE_EAL_TAILQ_RWLOCK         (&rte_eal_get_configuration()->mem_config->qlock)
@@ -190,6 +157,116 @@ int rte_eal_has_hugepages(void);
 int rte_sys_gettid(void);
 
 /**
+ * Attach the Environment Abstraction Layer (EAL)
+ * This function is to be executed on the PRIMARY lcore only, as soon
+ * as possible in the application's main() function.
+ *  
+  * @param argc
+ *   A non-negative value.  If it is greater than 0, the array members
+ *   for argv[0] through argv[argc] (non-inclusive) shall contain pointers
+ *   to strings.
+ * @param argv
+ *   An array of strings.  The contents of the array, as well as the strings
+ *   which are pointed to by the array, may be modified by this function.
+ * @return
+ *   - On success, the number of parsed arguments, which is greater or
+ *     equal to zero. After the call to rte_eal_init(),
+ *     all arguments argv[x] with x < ret may have been modified by this
+ *     function call and should not be further interpreted by the
+ *     application.  The EAL does not take any ownership of the memory used
+ *     for either the argv array, or its members.
+ *   - On failure, -1 and rte_errno is set to a value indicating the cause
+ *     for failure.  In some instances, the application will need to be
+ *     restarted as part of clearing the issue.
+ *
+ *   Error codes returned via rte_errno:
+ *     EACCES indicates a permissions issue.
+ *
+ *     EAGAIN indicates either a bus or system resource was not available,
+ *            setup may be attempted again.
+ *
+ *     EALREADY indicates that the rte_eal_init function has already been
+ *              called, and cannot be called again.
+ *
+ *     EFAULT indicates the tailq configuration name was not found in
+ *            memory configuration.
+ *
+ *     EINVAL indicates invalid parameters were passed as argv/argc.
+ *
+ *     ENOMEM indicates failure likely caused by an out-of-memory condition.
+ *
+ *     ENODEV indicates memory setup issues.
+ *
+ *     ENOTSUP indicates that the EAL cannot initialize on this system.
+ *
+ *     EPROTO indicates that the PCI bus is either not present, or is not
+ *            readable by the eal.
+ *
+ *     ENOEXEC indicates that a service core failed to launch successfully.
+ */
+int rte_eal_attach(int argc, char** argv);
+
+/**
+ * Initialize the Environment Abstraction Layer (EAL).
+ *
+ * This function is to be executed on the MASTER lcore only, as soon
+ * as possible in the application's main() function.
+ *
+ * The function finishes the initialization process before main() is called.
+ * It puts the SLAVE lcores in the WAIT state.
+ *
+ * When the multi-partition feature is supported, depending on the
+ * configuration (if CONFIG_RTE_EAL_MAIN_PARTITION is disabled), this
+ * function waits to ensure that the magic number is set before
+ * returning. See also the rte_eal_get_configuration() function. Note:
+ * This behavior may change in the future.
+ *
+ * @param argc
+ *   A non-negative value.  If it is greater than 0, the array members
+ *   for argv[0] through argv[argc] (non-inclusive) shall contain pointers
+ *   to strings.
+ * @param argv
+ *   An array of strings.  The contents of the array, as well as the strings
+ *   which are pointed to by the array, may be modified by this function.
+ * @return
+ *   - On success, the number of parsed arguments, which is greater or
+ *     equal to zero. After the call to rte_eal_init(),
+ *     all arguments argv[x] with x < ret may have been modified by this
+ *     function call and should not be further interpreted by the
+ *     application.  The EAL does not take any ownership of the memory used
+ *     for either the argv array, or its members.
+ *   - On failure, -1 and rte_errno is set to a value indicating the cause
+ *     for failure.  In some instances, the application will need to be
+ *     restarted as part of clearing the issue.
+ *
+ *   Error codes returned via rte_errno:
+ *     EACCES indicates a permissions issue.
+ *
+ *     EAGAIN indicates either a bus or system resource was not available,
+ *            setup may be attempted again.
+ *
+ *     EALREADY indicates that the rte_eal_init function has already been
+ *              called, and cannot be called again.
+ *
+ *     EFAULT indicates the tailq configuration name was not found in
+ *            memory configuration.
+ *
+ *     EINVAL indicates invalid parameters were passed as argv/argc.
+ *
+ *     ENOMEM indicates failure likely caused by an out-of-memory condition.
+ *
+ *     ENODEV indicates memory setup issues.
+ *
+ *     ENOTSUP indicates that the EAL cannot initialize on this system.
+ *
+ *     EPROTO indicates that the PCI bus is either not present, or is not
+ *            readable by the eal.
+ *
+ *     ENOEXEC indicates that a service core failed to launch successfully.
+ */
+int rte_eal_init(int argc, char **argv);
+
+/**
  * Get system unique thread id.
  *
  * @return
@@ -203,27 +280,6 @@ static inline int rte_gettid(void)
 		RTE_PER_LCORE(_thread_id) = rte_sys_gettid();
 	return RTE_PER_LCORE(_thread_id);
 }
-
-/**
- * @warning
- * @b EXPERIMENTAL: this API may change without prior notice
- *
- * Get user provided pool ops name for mbuf
- *
- * @return
- *   returns user provided pool ops name.
- */
-const char *
-rte_eal_mbuf_user_pool_ops(void);
-
-/**
- * Get default pool ops name for mbuf
- *
- * @return
- *   returns default pool ops name.
- */
-const char *
-rte_eal_mbuf_default_mempool_ops(void);
 
 #ifdef __cplusplus
 }

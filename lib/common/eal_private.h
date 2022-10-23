@@ -57,20 +57,6 @@ int rte_eal_cpu_init(void);
 int rte_eal_memory_init(void);
 
 /**
- * Configure timers
- *
- * This function is private to EAL.
- *
- * Mmap memory areas used by HPET (high precision event timer) that will
- * provide our time reference, and configure the TSC frequency also for it
- * to be used as a reference.
- *
- * @return
- *   0 on success, negative on error
- */
-int rte_eal_timer_init(void);
-
-/**
  * Init the default log stream
  *
  * This function is private to EAL.
@@ -92,17 +78,6 @@ int rte_eal_log_init(const char *id, int facility);
 int rte_eal_tailqs_init(void);
 
 /**
- * Init alarm mechanism. This is to allow a callback be called after
- * specific time.
- *
- * This function is private to EAL.
- *
- * @return
- *  0 on success, negative on error
- */
-int rte_eal_alarm_init(void);
-
-/**
  * Get cpu core_id.
  *
  * This function is private to the EAL.
@@ -115,13 +90,6 @@ unsigned eal_cpu_core_id(unsigned lcore_id);
  * This function is private to the EAL.
  */
 int eal_cpu_detected(unsigned lcore_id);
-
-/**
- * Set TSC frequency from precise value or estimation
- *
- * This function is private to the EAL.
- */
-void set_tsc_freq(void);
 
 /**
  * Get precise TSC frequency from system

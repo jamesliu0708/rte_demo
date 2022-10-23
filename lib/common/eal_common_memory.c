@@ -66,11 +66,10 @@ rte_dump_physmem_layout(FILE *f)
 		if (mcfg->memseg[i].addr == NULL)
 			break;
 
-		fprintf(f, "Segment %u: IOVA:0x%"PRIx64", len:%zu, "
+		fprintf(f, "Segment %u: len:%zu, "
 		       "virt:%p, socket_id:%"PRId32", "
 		       "hugepage_sz:%"PRIu64", nchannel:%"PRIx32", "
 		       "nrank:%"PRIx32"\n", i,
-		       mcfg->memseg[i].iova,
 		       mcfg->memseg[i].len,
 		       mcfg->memseg[i].addr,
 		       mcfg->memseg[i].socket_id,
@@ -129,7 +128,7 @@ rte_eal_memory_init(void)
 	if (retval < 0)
 		return -1;
 
-	if (internal_config.no_shconf == 0 && rte_eal_memdevice_init() < 0)
+	if (rte_eal_memdevice_init() < 0)
 		return -1;
 
 	return 0;

@@ -2,10 +2,14 @@
  * Copyright(c) 2010-2014 Intel Corporation
  */
 
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif // _GNU_SOURCE
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
 #include <dirent.h>
+#include <sched.h>
 
 #include <rte_log.h>
 #include <rte_eal.h>

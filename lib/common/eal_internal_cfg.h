@@ -35,8 +35,6 @@ struct internal_config {
 	volatile unsigned force_nrank;    /**< force number of ranks */
 	volatile unsigned no_hugetlbfs;   /**< true to disable hugetlbfs */
 	unsigned hugepage_unlink;         /**< true to unlink backing files */
-	volatile unsigned vmware_tsc_map; /**< true to use VMware TSC mapping
-										* instead of native TSC */
 	volatile enum rte_proc_type_t process_type; /**< multi-process proc type */
 	/** true to try allocating memory on specific sockets */
 	volatile unsigned force_sockets;
@@ -45,8 +43,6 @@ struct internal_config {
 	volatile int syslog_facility;	  /**< facility passed to openlog() */
 	const char *hugefile_prefix;      /**< the base filename of hugetlbfs files */
 	const char *hugepage_dir;         /**< specific hugetlbfs directory to use */
-	const char *user_mbuf_pool_ops_name;
-			/**< user defined mbuf pool ops name */
 	unsigned num_hugepage_sizes;      /**< how many sizes on this system */
 	struct hugepage_info hugepage_info[MAX_HUGEPAGE_SIZES];
 };

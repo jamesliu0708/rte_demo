@@ -20,7 +20,6 @@
 #include <rte_memzone.h>
 #include <rte_malloc.h>
 #include <rte_atomic.h>
-#include <rte_launch.h>
 #include <rte_eal.h>
 #include <rte_eal_memconfig.h>
 #include <rte_per_lcore.h>
@@ -822,7 +821,6 @@ rte_mempool_dump(FILE *f, struct rte_mempool *mp)
 	fprintf(f, "mempool <%s>@%p\n", mp->name, mp);
 	fprintf(f, "  flags=%x\n", mp->flags);
 	fprintf(f, "  pool=%p\n", mp->pool_data);
-	fprintf(f, "  iova=0x%" PRIx64 "\n", mp->mz->iova);
 	fprintf(f, "  nb_mem_chunks=%u\n", mp->nb_mem_chunks);
 	fprintf(f, "  size=%"PRIu32"\n", mp->size);
 	fprintf(f, "  populated_size=%"PRIu32"\n", mp->populated_size);

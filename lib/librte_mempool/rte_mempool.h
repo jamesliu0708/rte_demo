@@ -585,7 +585,7 @@ typedef void (rte_mempool_ctor_t)(struct rte_mempool *, void *);
  * @param private_data_size
  *   The size of the private data appended after the mempool
  *   structure. This is useful for storing some private data after the
- *   mempool structure, as is done for rte_mbuf_pool for example.
+ *   mempool structure.
  * @param mp_init
  *   A function pointer that is called for initialization of the pool,
  *   before object initialization. The user can initialize the private
@@ -664,7 +664,7 @@ rte_mempool_create(const char *name, unsigned n, unsigned elt_size,
  * @param private_data_size
  *   The size of the private data appended after the mempool
  *   structure. This is useful for storing some private data after the
- *   mempool structure, as is done for rte_mbuf_pool for example.
+ *   mempool structure.
  * @param socket_id
  *   The *socket_id* argument is the socket identifier in the case of
  *   NUMA. The value can be *SOCKET_ID_ANY* if there is no NUMA

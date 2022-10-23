@@ -23,6 +23,8 @@
 #include <sys/time.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <numa.h>
+#include <numaif.h>
 #ifdef RTE_EAL_NUMA_AWARE_HUGEPAGES
 #include <numa.h>
 #include <numaif.h>
@@ -30,7 +32,6 @@
 
 #include <rte_log.h>
 #include <rte_memory.h>
-#include <rte_launch.h>
 #include <rte_eal.h>
 #include <rte_eal_memconfig.h>
 #include <rte_per_lcore.h>
@@ -78,6 +79,8 @@ test_phys_addrs_available(void)
 
 	physaddr = rte_mem_virt2phy(&tmp);
 	if (physaddr == RTE_BAD_PHYS_ADDR) {
+		RTE_LOG(ERR, EAL,
+				"Cannot obtain physical addresses: %s.\n");
 		phys_addrs_available = false;
 	}
 }
@@ -1023,7 +1026,7 @@ rte_eal_hugepage_init(void)
 
 
 	/* map all hugepages and sort them */
-	for (i = 0; i < (int)internal_config.num_hugepage_sizes; i ++){
+	for (i = 0; i < (int)internal_config.num_hugepage_sizes; i ++) {
 		unsigned pages_old, pages_new;
 		struct hugepage_info *hpi;
 
@@ -1220,7 +1223,6 @@ rte_eal_hugepage_init(void)
 			if (j == RTE_MAX_MEMSEG)
 				break;
 
-			mcfg->memseg[j].iova = hugepage[i].physaddr;
 			mcfg->memseg[j].addr = hugepage[i].final_va;
 			mcfg->memseg[j].len = hugepage[i].size;
 			mcfg->memseg[j].socket_id = hugepage[i].socket_id;

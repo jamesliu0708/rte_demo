@@ -48,8 +48,6 @@
 
 #define SOCKET_MEM_STRLEN (RTE_MAX_NUMA_NODES * 10)
 
-/* Allow the application to print its usage message too if set */
-static rte_usage_hook_t	rte_application_usage_hook = NULL;
 
 /* early configuration structure, when memory config is not mmapped */
 static struct rte_mem_config early_mem_config;
@@ -75,23 +73,6 @@ struct lcore_config lcore_config[RTE_MAX_LCORE];
 
 /* internal configuration */
 struct internal_config internal_config;
-
-/* Return user provided mbuf pool ops name */
-const char *
-rte_eal_mbuf_user_pool_ops(void)
-{
-	return internal_config.user_mbuf_pool_ops_name;
-}
-
-/* Return mbuf pool ops name */
-const char *
-rte_eal_mbuf_default_mempool_ops(void)
-{
-	if (internal_config.user_mbuf_pool_ops_name == NULL)
-		return RTE_MBUF_DEFAULT_MEMPOOL_OPS;
-
-	return internal_config.user_mbuf_pool_ops_name;
-}
 
 /* Return a pointer to the configuration structure */
 struct rte_config *
@@ -146,9 +127,6 @@ rte_eal_config_create(void)
 
 	const char *pathname = eal_runtime_config_path();
 
-	if (internal_config.no_shconf)
-		return;
-
 	/* map the config before hugepage address so that we don't waste a page */
 	if (internal_config.base_virtaddr != 0)
 		rte_mem_cfg_addr = (void *)
@@ -199,11 +177,8 @@ rte_eal_config_attach(void)
 
 	const char *pathname = eal_runtime_config_path();
 
-	if (internal_config.no_shconf)
-		return;
-
 	if (mem_cfg_fd < 0){
-		mem_cfg_fd = open(pathname, O_RDWR);
+		mem_cfg_fd = open(pathname, O_RDONLY);
 		if (mem_cfg_fd < 0)
 			rte_panic("Cannot open '%s' for rte_mem_config\n", pathname);
 	}
@@ -224,9 +199,6 @@ rte_eal_config_reattach(void)
 {
 	struct rte_mem_config *mem_config;
 	void *rte_mem_cfg_addr;
-
-	if (internal_config.no_shconf)
-		return;
 
 	/* save the address primary process has mapped shared config to */
 	rte_mem_cfg_addr = (void *) (uintptr_t) rte_config.mem_config->mem_cfg_addr;
@@ -311,19 +283,6 @@ eal_hugedirs_unlock(void)
 		/* reset the field */
 		internal_config.hugepage_info[i].lock_descriptor = -1;
 	}
-}
-
-/* Set a per-application usage message */
-rte_usage_hook_t
-rte_set_application_usage_hook( rte_usage_hook_t usage_func )
-{
-	rte_usage_hook_t	old_func;
-
-	/* Will be NULL on the first call to denote the last usage routine. */
-	old_func					= rte_application_usage_hook;
-	rte_application_usage_hook	= usage_func;
-
-	return old_func;
 }
 
 static int
@@ -436,6 +395,133 @@ eal_log_level_parse(int argc, char **argv)
 	optarg = old_optarg;
 }
 
+/* display usage */
+static void
+eal_usage(const char *prgname)
+{
+	printf("\nUsage: %s ", prgname);
+	eal_common_usage();
+	printf("EAL Linux options:\n"
+	       "  --"OPT_SOCKET_MEM"        Memory to allocate on sockets (comma separated values)\n"
+	       "  --"OPT_HUGE_DIR"          Directory where hugetlbfs is mounted\n"
+	       "  --"OPT_FILE_PREFIX"       Prefix for hugepage filenames\n"
+	       "  --"OPT_BASE_VIRTADDR"     Base virtual address\n"
+	       "\n");
+}
+
+/* Parse the argument given in the command line of the application */
+static int
+eal_parse_args(int argc, char **argv)
+{
+	int opt, ret;
+	char **argvopt;
+	int option_index;
+	char *prgname = argv[0];
+	const int old_optind = optind;
+	const int old_optopt = optopt;
+	char * const old_optarg = optarg;
+
+	argvopt = argv;
+	optind = 1;
+
+	while ((opt = getopt_long(argc, argvopt, eal_short_options,
+				  eal_long_options, &option_index)) != EOF) {
+
+		/* getopt is not happy, stop right now */
+		if (opt == '?') {
+			eal_usage(prgname);
+			ret = -1;
+			goto out;
+		}
+
+		ret = eal_parse_common_option(opt, optarg, &internal_config);
+		/* common parser is not happy */
+		if (ret < 0) {
+			eal_usage(prgname);
+			ret = -1;
+			goto out;
+		}
+		/* common parser handled this option */
+		if (ret == 0)
+			continue;
+
+		switch (opt) {
+		case 'h':
+			eal_usage(prgname);
+			exit(EXIT_SUCCESS);
+
+		case OPT_HUGE_DIR_NUM:
+			internal_config.hugepage_dir = strdup(optarg);
+			break;
+
+		case OPT_FILE_PREFIX_NUM:
+			internal_config.hugefile_prefix = strdup(optarg);
+			break;
+
+		case OPT_SOCKET_MEM_NUM:
+			if (eal_parse_socket_mem(optarg) < 0) {
+				RTE_LOG(ERR, EAL, "invalid parameters for --"
+						OPT_SOCKET_MEM "\n");
+				eal_usage(prgname);
+				ret = -1;
+				goto out;
+			}
+			break;
+
+		case OPT_BASE_VIRTADDR_NUM:
+			if (eal_parse_base_virtaddr(optarg) < 0) {
+				RTE_LOG(ERR, EAL, "invalid parameter for --"
+						OPT_BASE_VIRTADDR "\n");
+				eal_usage(prgname);
+				ret = -1;
+				goto out;
+			}
+			break;
+
+		default:
+			if (opt < OPT_LONG_MIN_NUM && isprint(opt)) {
+				RTE_LOG(ERR, EAL, "Option %c is not supported "
+					"on Linux\n", opt);
+			} else if (opt >= OPT_LONG_MIN_NUM &&
+				   opt < OPT_LONG_MAX_NUM) {
+				RTE_LOG(ERR, EAL, "Option %s is not supported "
+					"on Linux\n",
+					eal_long_options[option_index].name);
+			} else {
+				RTE_LOG(ERR, EAL, "Option %d is not supported "
+					"on Linux\n", opt);
+			}
+			eal_usage(prgname);
+			ret = -1;
+			goto out;
+		}
+	}
+
+	if (eal_adjust_config(&internal_config) != 0) {
+		ret = -1;
+		goto out;
+	}
+
+	/* sanity checks */
+	if (eal_check_common_options(&internal_config) != 0) {
+		eal_usage(prgname);
+		ret = -1;
+		goto out;
+	}
+
+	if (optind >= 0)
+		argv[optind-1] = prgname;
+	ret = optind-1;
+
+out:
+	/* restore getopt lib */
+	optind = old_optind;
+	optopt = old_optopt;
+	optarg = old_optarg;
+
+	return ret;
+}
+
 static void
 eal_check_mem_on_local_socket(void)
 {
@@ -475,6 +561,50 @@ static void rte_eal_init_alert(const char *msg)
 	RTE_LOG(ERR, EAL, "%s\n", msg);
 }
 
+/* Launch threads, called at application init() */
+int
+rte_eal_attach(int argc, char** argv)
+{
+	static rte_atomic32_t run_once = RTE_ATOMIC32_INIT(0);
+	const char *logid;
+
+	if (!rte_atomic32_test_and_set(&run_once)) {
+		rte_eal_init_alert("already called initialization.");
+		rte_errno = EALREADY;
+		return -1;
+	}
+
+	eal_reset_internal_config(&internal_config);
+
+	/* set log level as early as possible */
+	eal_log_level_parse(argc, argv);
+
+	internal_config.process_type = RTE_PROC_SECONDARY;
+
+	rte_config_init();
+
+	if (rte_eal_log_init(logid, internal_config.syslog_facility) < 0) {
+		rte_eal_init_alert("Cannot init logging.");
+		rte_errno = ENOMEM;
+		rte_atomic32_clear(&run_once);
+		return -1;
+	}
+
+	if (rte_eal_memory_init() < 0) {
+		rte_eal_init_alert("Cannot init memory\n");
+		rte_errno = ENOMEM;
+		return -1;
+	}
+
+	if (rte_eal_memzone_init() < 0) {
+		rte_eal_init_alert("Cannot init memzone\n");
+		rte_errno = ENODEV;
+		return -1;
+	}
+
+	return 0;
+}
+
 /* Launch threads, called at application init(). */
 int
 rte_eal_init(int argc, char **argv)
@@ -483,12 +613,12 @@ rte_eal_init(int argc, char **argv)
 	static rte_atomic32_t run_once = RTE_ATOMIC32_INIT(0);
 	const char *logid;
 
-	/* checks if the machine is adequate */
-	if (!rte_cpu_is_supported()) {
-		rte_eal_init_alert("unsupported cpu type.");
-		rte_errno = ENOTSUP;
-		return -1;
-	}
+	// /* checks if the machine is adequate */
+	// if (!rte_cpu_is_supported()) {
+	// 	rte_eal_init_alert("unsupported cpu type.");
+	// 	rte_errno = ENOTSUP;
+	// 	return -1;
+	// }
 
 	if (!rte_atomic32_test_and_set(&run_once)) {
 		rte_eal_init_alert("already called initialization.");
@@ -496,10 +626,31 @@ rte_eal_init(int argc, char **argv)
 		return -1;
 	}
 
-	rte_config_init();
+	eal_reset_internal_config(&internal_config);
+
+	/* set log level as early as possible */
+	eal_log_level_parse(argc, argv);
+
+	if (rte_eal_cpu_init() < 0) {
+		rte_eal_init_alert("Cannot detect lcores.");
+		rte_errno = ENOTSUP;
+		return -1;
+	}
+
+	fctret = eal_parse_args(argc, argv);
+	if (fctret < 0) {
+		rte_eal_init_alert("Invalid 'command line' arguments.");
+		rte_errno = EINVAL;
+		rte_atomic32_clear(&run_once);
+		return -1;
+	}
+
+	if (internal_config.process_type != RTE_PROC_PRIMARY) {
+		rte_eal_init_alert("Invalid process type, expected RTE_PROC_PRIMARY.");
+		return -1;
+	}
 
 	if (internal_config.no_hugetlbfs == 0 &&
-		internal_config.process_type != RTE_PROC_SECONDARY &&
 		eal_hugepage_info_init() < 0) {
 		rte_eal_init_alert("Cannot get hugepage information.");
 		rte_errno = EACCES;
@@ -512,6 +663,7 @@ rte_eal_init(int argc, char **argv)
 			internal_config.memory = MEMSIZE_IF_NO_HUGE_PAGE;
 	}
 
+	rte_config_init();
 
 	if (rte_eal_log_init(logid, internal_config.syslog_facility) < 0) {
 		rte_eal_init_alert("Cannot init logging.");
@@ -541,20 +693,16 @@ rte_eal_init(int argc, char **argv)
 		return -1;
 	}
 
-	if (rte_eal_timer_init() < 0) {
-		rte_eal_init_alert("Cannot init HPET or TSC timers\n");
-		rte_errno = ENOTSUP;
-		return -1;
-	}
-
 	eal_check_mem_on_local_socket();
 
 	eal_thread_init_master(rte_config.master_lcore);
 
+	rte_eal_mcfg_complete();
+
 	return fctret;
 }
 
-int __rte_experimental
+int
 rte_eal_cleanup(void)
 {
 	// rte_service_finalize();

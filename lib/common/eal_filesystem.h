@@ -29,10 +29,7 @@ eal_runtime_config_path(void)
 {
 	static char buffer[PATH_MAX]; /* static so auto-zeroed */
 	const char *directory = default_config_dir;
-	const char *home_dir = getenv("HOME");
 
-	if (getuid() != 0 && home_dir != NULL)
-		directory = home_dir;
 	snprintf(buffer, sizeof(buffer) - 1, RUNTIME_CONFIG_FMT, directory,
 			internal_config.hugefile_prefix);
 	return buffer;

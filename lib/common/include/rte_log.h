@@ -55,7 +55,6 @@ extern struct rte_logs rte_logs;
 #define RTE_LOGTYPE_PORT      13 /**< Log related to port. */
 #define RTE_LOGTYPE_TABLE     14 /**< Log related to table. */
 #define RTE_LOGTYPE_PIPELINE  15 /**< Log related to pipeline. */
-#define RTE_LOGTYPE_MBUF      16 /**< Log related to mbuf. */
 #define RTE_LOGTYPE_CRYPTODEV 17 /**< Log related to cryptodev. */
 #define RTE_LOGTYPE_EFD       18 /**< Log related to EFD. */
 #define RTE_LOGTYPE_EVENTDEV  19 /**< Log related to eventdev. */
