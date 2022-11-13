@@ -422,7 +422,7 @@ map_all_hugepages(struct hugepage_file *hugepg_tbl, struct hugepage_info *hpi,
 		}
 
 		/* try to create hugepage file */
-		fd = open(hugepg_tbl[i].filepath, O_CREAT | O_RDWR, 0600);
+		fd = open(hugepg_tbl[i].filepath, O_CREAT | O_RDWR, 0666);
 		if (fd < 0) {
 			RTE_LOG(DEBUG, EAL, "%s(): open failed: %s\n", __func__,
 					strerror(errno));

@@ -35,7 +35,7 @@ rte_lcore_has_role(unsigned int lcore_id, enum rte_lcore_role_t role)
 	if (lcore_id >= RTE_MAX_LCORE)
 		return -EINVAL;
 
-	if (cfg->lcore_role[lcore_id] == role)
+	if (cfg->cpu_config->lcore_role[lcore_id] == role)
 		return 0;
 
 	return -EINVAL;
@@ -76,6 +76,7 @@ rte_thread_set_affinity(rte_cpuset_t *cpusetp)
 	pthread_t tid;
 
 	tid = pthread_self();
+	struct rte_config *cfg = rte_eal_get_configuration();
 
 	s = pthread_setaffinity_np(tid, sizeof(rte_cpuset_t), cpusetp);
 	if (s != 0) {
@@ -94,8 +95,8 @@ rte_thread_set_affinity(rte_cpuset_t *cpusetp)
 	lcore_id = rte_lcore_id();
 	if (lcore_id != (unsigned)LCORE_ID_ANY) {
 		/* EAL thread will update lcore_config */
-		lcore_config[lcore_id].socket_id = RTE_PER_LCORE(_socket_id);
-		memmove(&lcore_config[lcore_id].cpuset, cpusetp,
+		cfg->cpu_config->lcore_config[lcore_id].socket_id = RTE_PER_LCORE(_socket_id);
+		memmove(&cfg->cpu_config->lcore_config[lcore_id].cpuset, cpusetp,
 			sizeof(rte_cpuset_t));
 	}
 

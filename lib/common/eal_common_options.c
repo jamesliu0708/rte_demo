@@ -38,15 +38,12 @@ eal_long_options[] = {
 	{OPT_HUGE_DIR,          1, NULL, OPT_HUGE_DIR_NUM         },
 	{OPT_HUGE_UNLINK,       0, NULL, OPT_HUGE_UNLINK_NUM      },
 	{OPT_LOG_LEVEL,         1, NULL, OPT_LOG_LEVEL_NUM        },
-	{OPT_MASTER_LCORE,      1, NULL, OPT_MASTER_LCORE_NUM     },
 	{OPT_NO_HUGE,           0, NULL, OPT_NO_HUGE_NUM          },
 	{OPT_PROC_TYPE,         1, NULL, OPT_PROC_TYPE_NUM        },
 	{OPT_SOCKET_MEM,        1, NULL, OPT_SOCKET_MEM_NUM       },
 	{OPT_SYSLOG,            1, NULL, OPT_SYSLOG_NUM           },
 	{0,                     0, NULL, 0                        }
 };
-
-static int master_lcore_parsed;
 
 void
 eal_reset_internal_config(struct internal_config *internal_cfg)
@@ -83,49 +80,20 @@ eal_auto_detect_cores(struct rte_config *cfg)
 		CPU_ZERO(&affinity_set);
 
 	for (lcore_id = 0; lcore_id < RTE_MAX_LCORE; lcore_id++) {
-		if (cfg->lcore_role[lcore_id] == ROLE_RTE &&
+		if (cfg->cpu_config->lcore_role[lcore_id] == ROLE_RTE &&
 		    !CPU_ISSET(lcore_id, &affinity_set)) {
-			cfg->lcore_role[lcore_id] = ROLE_OFF;
+			cfg->cpu_config->lcore_role[lcore_id] = ROLE_OFF;
 			removed++;
 		}
 	}
 
-	cfg->lcore_count -= removed;
-}
-
-/* Changes the lcore id of the master thread */
-static int
-eal_parse_master_lcore(const char *arg)
-{
-	char *parsing_end;
-	struct rte_config *cfg = rte_eal_get_configuration();
-
-	errno = 0;
-	cfg->master_lcore = (uint32_t) strtol(arg, &parsing_end, 0);
-	if (errno || parsing_end[0] != 0)
-		return -1;
-	if (cfg->master_lcore >= RTE_MAX_LCORE)
-		return -1;
-    master_lcore_parsed = 1;
-
-	/* ensure master core is not used as service core */
-	if (lcore_config[cfg->master_lcore].core_role == ROLE_SERVICE) {
-		RTE_LOG(ERR, EAL, "Error: Master lcore is used as a service core.\n");
-		return -1;
-	}
-
-	return 0;
+	cfg->cpu_config->lcore_count -= removed;
 }
 
 int
 eal_check_common_options(struct internal_config *internal_cfg)
 {
 	struct rte_config *cfg = rte_eal_get_configuration();
-
-	if (cfg->lcore_role[cfg->master_lcore] != ROLE_RTE) {
-		RTE_LOG(ERR, EAL, "Master lcore is not enabled for DPDK\n");
-		return -1;
-	}
 
 	if (internal_cfg->process_type == RTE_PROC_INVALID) {
 		RTE_LOG(ERR, EAL, "Invalid process type specified\n");
@@ -265,12 +233,6 @@ eal_adjust_config(struct internal_config *internal_cfg)
 	if (internal_config.process_type == RTE_PROC_AUTO)
 		internal_config.process_type = eal_proc_type_detect();
 
-	/* default master lcore is the first one */
-	if (!master_lcore_parsed) {
-		cfg->master_lcore = rte_get_next_lcore(-1, 0, 0);
-		lcore_config[cfg->master_lcore].core_role = ROLE_RTE;
-	}
-
 	/* if no memory amounts were requested, this will result in 0 and
 	 * will be overridden later, right after eal_hugepage_info_init() */
 	for (i = 0; i < RTE_MAX_NUMA_NODES; i++)
@@ -328,14 +290,6 @@ eal_parse_common_option(int opt, const char *optarg,
 		conf->process_type = eal_parse_proc_type(optarg);
 		break;
 
-	case OPT_MASTER_LCORE_NUM:
-		if (eal_parse_master_lcore(optarg) < 0) {
-			RTE_LOG(ERR, EAL, "invalid parameter for --"
-					OPT_MASTER_LCORE "\n");
-			return -1;
-		}
-		break;
-
 	case OPT_SYSLOG_NUM:
 		if (eal_parse_syslog(optarg, conf) < 0) {
 			RTE_LOG(ERR, EAL, "invalid parameters for --"
@@ -372,7 +326,6 @@ eal_common_usage(void)
 {
 	printf("[options]\n\n"
 	       "EAL common options:\n"
-	       "  --"OPT_MASTER_LCORE" ID   Core ID that is used as master\n"
 	       "  -n CHANNELS         Number of memory channels\n"
 	       "  -m MB               Memory to allocate (see also --"OPT_SOCKET_MEM")\n"
 	       "  -r RANKS            Force number of memory ranks (don't detect)\n"

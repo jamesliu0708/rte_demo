@@ -32,22 +32,13 @@ static int
 eal_thread_set_affinity(void)
 {
 	unsigned lcore_id = rte_lcore_id();
+	struct rte_config* cfg = rte_eal_get_configuration();
 
 	/* acquire system unique id  */
 	rte_gettid();
 
 	/* update EAL thread core affinity */
-	return rte_thread_set_affinity(&lcore_config[lcore_id].cpuset);
-}
-
-void eal_thread_init_master(unsigned lcore_id)
-{
-	/* set the lcore ID in per-lcore memory area */
-	RTE_PER_LCORE(_lcore_id) = lcore_id;
-
-	/* set CPU affinity */
-	if (eal_thread_set_affinity() < 0)
-		rte_panic("cannot set affinity\n");
+	return rte_thread_set_affinity(&cfg->cpu_config->lcore_config[lcore_id].cpuset);
 }
 
 /* require calling thread tid by gettid() */

@@ -48,6 +48,8 @@
 
 #define SOCKET_MEM_STRLEN (RTE_MAX_NUMA_NODES * 10)
 
+/* early configuation structure, when cpu config is not mmapped */
+static struct rte_cpuinfo early_cpu_config;
 
 /* early configuration structure, when memory config is not mmapped */
 static struct rte_mem_config early_mem_config;
@@ -65,11 +67,9 @@ static struct flock wr_lock = {
 
 /* Address of global and public configuration */
 static struct rte_config rte_config = {
+		.cpu_config = &early_cpu_config,
 		.mem_config = &early_mem_config,
 };
-
-/* internal configuration (per-core) */
-struct lcore_config lcore_config[RTE_MAX_LCORE];
 
 /* internal configuration */
 struct internal_config internal_config;
@@ -112,7 +112,6 @@ eal_parse_sysfs_value(const char *filename, unsigned long *val)
 	return 0;
 }
 
-
 /* create memory configuration in shared/mmap memory. Take out
  * a write lock on the memsegs, so we can auto-detect primary/secondary.
  * This means we never close the file while running (auto-close on exit).
@@ -122,26 +121,26 @@ eal_parse_sysfs_value(const char *filename, unsigned long *val)
 static void
 rte_eal_config_create(void)
 {
-	void *rte_mem_cfg_addr;
+	void *rte_cfg_addr;
 	int retval;
 
 	const char *pathname = eal_runtime_config_path();
 
 	/* map the config before hugepage address so that we don't waste a page */
 	if (internal_config.base_virtaddr != 0)
-		rte_mem_cfg_addr = (void *)
+		rte_cfg_addr = (void *)
 			RTE_ALIGN_FLOOR(internal_config.base_virtaddr -
 			sizeof(struct rte_mem_config), sysconf(_SC_PAGE_SIZE));
 	else
-		rte_mem_cfg_addr = NULL;
+		rte_cfg_addr = NULL;
 
 	if (mem_cfg_fd < 0){
-		mem_cfg_fd = open(pathname, O_RDWR | O_CREAT, 0660);
+		mem_cfg_fd = open(pathname, O_RDWR | O_CREAT, 0666);
 		if (mem_cfg_fd < 0)
-			rte_panic("Cannot open '%s' for rte_mem_config\n", pathname);
+			rte_exit(EXIT_FAILURE, "Cannot open '%s' for rte_mem_config\n", pathname);		
 	}
 
-	retval = ftruncate(mem_cfg_fd, sizeof(*rte_config.mem_config));
+	retval = ftruncate(mem_cfg_fd, sizeof(*rte_config.mem_config) + sizeof(*rte_config.cpu_config));
 	if (retval < 0){
 		close(mem_cfg_fd);
 		rte_panic("Cannot resize '%s' for rte_mem_config\n", pathname);
@@ -154,19 +153,22 @@ rte_eal_config_create(void)
 				"process running?\n", pathname);
 	}
 
-	rte_mem_cfg_addr = mmap(rte_mem_cfg_addr, sizeof(*rte_config.mem_config),
+	rte_cfg_addr = mmap(rte_cfg_addr, sizeof(*rte_config.mem_config) + sizeof(*rte_config.cpu_config),
 				PROT_READ | PROT_WRITE, MAP_SHARED, mem_cfg_fd, 0);
 
-	if (rte_mem_cfg_addr == MAP_FAILED){
+	if (rte_cfg_addr == MAP_FAILED){
 		rte_panic("Cannot mmap memory for rte_config\n");
 	}
-	memcpy(rte_mem_cfg_addr, &early_mem_config, sizeof(early_mem_config));
-	rte_config.mem_config = rte_mem_cfg_addr;
+	memcpy(rte_cfg_addr, &early_mem_config, sizeof(early_mem_config));
+	rte_config.mem_config = rte_cfg_addr;
 
 	/* store address of the config in the config itself so that secondary
 	 * processes could later map the config into this exact location */
-	rte_config.mem_config->mem_cfg_addr = (uintptr_t) rte_mem_cfg_addr;
+	rte_config.mem_config->mem_cfg_addr = (uintptr_t) rte_cfg_addr;
 
+	/* init cpu configuration */
+	memcpy((char*)rte_cfg_addr + sizeof(*rte_config.mem_config), &early_cpu_config, sizeof(early_cpu_config));
+	rte_config.cpu_config->cpu_cfg_addr = (uint64_t)((char*)rte_cfg_addr + sizeof(*rte_config.mem_config));
 }
 
 /* attach to an existing shared memory config */
@@ -174,6 +176,7 @@ static void
 rte_eal_config_attach(void)
 {
 	struct rte_mem_config *mem_config;
+	struct rte_cpuinfo *cpu_config;
 
 	const char *pathname = eal_runtime_config_path();
 
@@ -191,6 +194,8 @@ rte_eal_config_attach(void)
 			  errno, strerror(errno));
 
 	rte_config.mem_config = mem_config;
+	cpu_config = (struct rte_cpuinfo*)((char*)mem_config + sizeof(struct rte_mem_config));
+	rte_config.cpu_config = cpu_config;
 }
 
 /* reattach the shared config at exact memory location primary process has it */
@@ -198,6 +203,7 @@ static void
 rte_eal_config_reattach(void)
 {
 	struct rte_mem_config *mem_config;
+	struct rte_cpuinfo * cpu_config;
 	void *rte_mem_cfg_addr;
 
 	/* save the address primary process has mapped shared config to */
@@ -208,7 +214,7 @@ rte_eal_config_reattach(void)
 
 	/* remap the config at proper address */
 	mem_config = (struct rte_mem_config *) mmap(rte_mem_cfg_addr,
-			sizeof(*mem_config), PROT_READ | PROT_WRITE, MAP_SHARED,
+			sizeof(*mem_config), PROT_READ, MAP_SHARED,
 			mem_cfg_fd, 0);
 	if (mem_config == MAP_FAILED || mem_config != rte_mem_cfg_addr) {
 		if (mem_config != MAP_FAILED)
@@ -223,6 +229,9 @@ rte_eal_config_reattach(void)
 	close(mem_cfg_fd);
 
 	rte_config.mem_config = mem_config;
+
+	cpu_config = (struct rte_config*)((char*)mem_config + sizeof(struct rte_mem_config));
+	rte_config.cpu_config = cpu_config;
 }
 
 /* Detect if we are a primary or a secondary process */
@@ -235,7 +244,7 @@ eal_proc_type_detect(void)
 	/* if we can open the file but not get a write-lock we are a secondary
 	 * process. NOTE: if we get a file handle back, we keep that open
 	 * and don't close it to prevent a race condition between multiple opens */
-	if (((mem_cfg_fd = open(pathname, O_RDWR)) >= 0) &&
+	if (((mem_cfg_fd = open(pathname, O_RDWR)) < 0) ||
 			(fcntl(mem_cfg_fd, F_SETLK, &wr_lock) < 0))
 		ptype = RTE_PROC_SECONDARY;
 
@@ -528,13 +537,10 @@ eal_check_mem_on_local_socket(void)
 	const struct rte_memseg *ms;
 	int i, socket_id;
 
-	socket_id = rte_lcore_to_socket_id(rte_config.master_lcore);
-
 	ms = rte_eal_get_physmem_layout();
 
 	for (i = 0; i < RTE_MAX_MEMSEG; i++)
-		if (ms[i].socket_id == socket_id &&
-				ms[i].len > 0)
+		if (ms[i].len > 0)
 			return;
 
 	RTE_LOG(WARNING, EAL, "WARNING: Master core has no "
@@ -593,12 +599,6 @@ rte_eal_attach(int argc, char** argv)
 	if (rte_eal_memory_init() < 0) {
 		rte_eal_init_alert("Cannot init memory\n");
 		rte_errno = ENOMEM;
-		return -1;
-	}
-
-	if (rte_eal_memzone_init() < 0) {
-		rte_eal_init_alert("Cannot init memzone\n");
-		rte_errno = ENODEV;
 		return -1;
 	}
 
@@ -695,8 +695,6 @@ rte_eal_init(int argc, char **argv)
 
 	eal_check_mem_on_local_socket();
 
-	eal_thread_init_master(rte_config.master_lcore);
-
 	rte_eal_mcfg_complete();
 
 	return fctret;
@@ -713,7 +711,7 @@ rte_eal_cleanup(void)
 enum rte_lcore_role_t
 rte_eal_lcore_role(unsigned lcore_id)
 {
-	return rte_config.lcore_role[lcore_id];
+	return rte_config.cpu_config->lcore_role[lcore_id];
 }
 
 enum rte_proc_type_t

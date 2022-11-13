@@ -27,13 +27,33 @@ extern "C" {
 /* Maximum thread_name length. */
 #define RTE_MAX_THREAD_NAME_LEN 16
 
+#define LCORE_ID_ANY     UINT32_MAX       /**< Any lcore. */
+
+#if defined(__linux__)
+	typedef	cpu_set_t rte_cpuset_t;
+#elif defined(__FreeBSD__)
+#include <pthread_np.h>
+	typedef cpuset_t rte_cpuset_t;
+#endif
+
 /**
  * The lcore role (used in RTE or not).
  */
 enum rte_lcore_role_t {
-	ROLE_RTE,
 	ROLE_OFF,
-	ROLE_SERVICE,
+	ROLE_RTE,
+};
+
+/**
+ * Structure storing internal configuration (per-lcore)
+ */
+struct lcore_config {
+	unsigned detected;         /**< true if lcore was detected */
+	unsigned socket_id;        /**< physical socket id for this lcore */
+	unsigned core_id;          /**< core number on socket for this lcore */
+	int core_index;            /**< relative index, starting from 0 */
+	rte_cpuset_t cpuset;       /**< cpu set which the lcore affinity to */
+	uint8_t core_role;         /**< role of core eg: OFF, RTE */
 };
 
 /**
@@ -48,19 +68,35 @@ enum rte_proc_type_t {
 };
 
 /**
+ * The configuration structure for the cpu num, role, stat
+ */
+struct rte_cpuinfo {
+	uint32_t lcore_count;        /**< Number of available logical cores. */
+	enum rte_lcore_role_t lcore_role[RTE_MAX_LCORE]; /**< State of cores. */
+	struct lcore_config lcore_config[RTE_MAX_LCORE]; /**< Internal configuration */
+
+	/* address of mem_config in primary process. used to map shared config into
+	 * exact same address the primary process maps it.
+	 */
+	uint64_t cpu_cfg_addr;
+};
+
+/**
  * The global RTE configuration structure.
  */
 struct rte_config {
-	uint32_t master_lcore;       /**< Id of the master lcore */
-	uint32_t lcore_count;        /**< Number of available logical cores. */
-	enum rte_lcore_role_t lcore_role[RTE_MAX_LCORE]; /**< State of cores. */
 
 	/** Primary or secondary configuration */
 	enum rte_proc_type_t process_type;
 
 	/**
-	 * Pointer to memory configuration, which may be shared across multiple
-	 * DPDK instances
+	 * Pointer to cpu configuration, which may be shared across multiple instance
+	 */
+	struct rte_cpuinfo *cpu_config;
+
+	/**
+	 * Pointer to cpu configuration, which may be shared across multiple
+	 *  instances
 	 */
 	struct rte_mem_config *mem_config;
 } __attribute__((__packed__));
