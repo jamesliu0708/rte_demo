@@ -4,7 +4,7 @@ add_compile_options(-mssse3)
 # add_compile_options(-O3 -march=native)
 add_compile_options(-O0 -ggdb)
 
-add_subdirectory(googletest)
+# add_subdirectory(googletest)
 
 add_link_options(-rdynamic)
 
@@ -34,5 +34,6 @@ add_executable(tst_debug tst_debug.cc
                         )
 target_link_libraries(tst_debug gtest pthread)
 
-add_executable(tst_malloc_master tst_malloc_master.cc
-                        librte_demo gtest pthread)
+add_executable(tst_malloc_master tst_malloc_master.cc)
+target_link_directories(tst_malloc_master PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
+target_link_libraries(tst_malloc_master rte_demo gtest pthread)

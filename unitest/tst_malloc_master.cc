@@ -3,6 +3,7 @@
 #include "rte_common.h"
 #include "rte_cycles.h"
 #include "rte_random.h"
+#include "rte_lcore.h"
 
 #include <gtest/gtest.h>
 
@@ -36,8 +37,8 @@ TEST(test_malloc, test_str_to_size)
 TEST(test_malloc, test_zero_aligned_alloc)
 {
     char *p1 = (char*)rte_malloc(NULL,1024, 0);
-	ASSERT_NE(p1, NULL);
-	ASSERT_EQ(rte_is_aligned(p1, RTE_CACHE_LINE_SIZE), 0);
+	ASSERT_NE((uintptr_t)p1, NULL);
+	ASSERT_EQ(rte_is_aligned(p1, RTE_CACHE_LINE_SIZE), 1);
 	rte_free(p1);
 }
 
@@ -49,14 +50,14 @@ TEST(test_malloc, test_malloc_bad_params)
 
 	/* rte_malloc expected to return null with inappropriate size */
 	char *bad_ptr = (char*)rte_malloc(type, size, align);
-	ASSERT_EQ(bad_ptr, NULL);
+	ASSERT_EQ((uintptr_t)bad_ptr, NULL);
 
 	/* rte_malloc expected to return null with inappropriate alignment */
 	align = 17;
 	size = 1024;
 
 	bad_ptr = (char*)rte_malloc(type, size, align);
-	ASSERT_EQ(bad_ptr, NULL);
+	ASSERT_EQ((uintptr_t)bad_ptr, NULL);
 }
 
 TEST(test_malloc, test_realloc)
@@ -69,11 +70,11 @@ TEST(test_malloc, test_realloc)
 
 	/* test data is the same even if element is moved*/
 	char *ptr1 = (char*)rte_zmalloc(NULL, size1, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr1, NULL);
+	ASSERT_NE((uintptr_t)ptr1, NULL);
 
 	snprintf(ptr1, size1, "%s" ,hello_str);
 	char *ptr2 = (char*)rte_realloc(ptr1, size2, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr2, NULL);
+	ASSERT_NE((uintptr_t)ptr2, NULL);
 
 	if (ptr1 == ptr2){
 		printf("unexpected - ptr1 == ptr2\n");
@@ -88,7 +89,7 @@ TEST(test_malloc, test_realloc)
 	 * and resize third. It should not move. (ptr1 is now invalid)
 	 */
 	char *ptr3 = (char*)rte_zmalloc(NULL, size3, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr3, 0);
+	ASSERT_NE((uintptr_t)ptr3, NULL);
 
 	for (i = 0; i < size3; i++)
 		ASSERT_EQ(ptr3[i], 0);
@@ -96,7 +97,7 @@ TEST(test_malloc, test_realloc)
 	rte_free(ptr2);
 	/* first resize to half the size of the freed block */
 	char *ptr4 = (char*)rte_realloc(ptr3, size4, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr4, 0);
+	ASSERT_NE((uintptr_t)ptr4, NULL);
 
 	ASSERT_EQ(ptr3, ptr4);
 
@@ -109,10 +110,10 @@ TEST(test_malloc, test_realloc)
 	const unsigned size5 = 1024;
 	const unsigned size6 = size5 / 2;
 	char *ptr5 = (char*)rte_malloc(NULL, size5, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr5, NULL);
+	ASSERT_NE((uintptr_t)ptr5, NULL);
 	char *ptr6 = (char*)rte_realloc(ptr5, size6, RTE_CACHE_LINE_SIZE);
 	// NULL pointer returned from rte_realloc
-    ASSERT_NE(ptr6, NULL);
+    ASSERT_NE((uintptr_t)ptr6, NULL);
     // resizing to a smaller size moved data
 	ASSERT_EQ(ptr5, ptr6);
 	rte_free(ptr6);
@@ -123,12 +124,12 @@ TEST(test_malloc, test_realloc)
 	unsigned new_align = RTE_CACHE_LINE_SIZE * 2;
 	char *ptr7 = (char*)rte_malloc(NULL, size7, orig_align);
 	// NULL pointer returned from rte_realloc
-    ASSERT_NE(ptr7, NULL);
+    ASSERT_NE((uintptr_t)ptr7, NULL);
 	/* calc an alignment we don't already have */
 	while(RTE_PTR_ALIGN(ptr7, new_align) == ptr7)
 		new_align *= 2;
 	char *ptr8 = (char*)rte_realloc(ptr7, size7, new_align);
-	ASSERT_NE(ptr8, NULL);
+	ASSERT_NE((uintptr_t)ptr8, NULL);
     // Failure to re-align data
 	ASSERT_EQ(RTE_PTR_ALIGN(ptr8, new_align), ptr8);
 	rte_free(ptr8);
@@ -140,13 +141,13 @@ TEST(test_malloc, test_realloc)
 	unsigned size11 = size9 + size10 + 256;
 	char *ptr9 = (char*)rte_malloc(NULL, size9, RTE_CACHE_LINE_SIZE);
 	// NULL pointer returned from rte_realloc
-    ASSERT_NE(ptr9, NULL);
+    ASSERT_NE((uintptr_t)ptr9, NULL);
 	char *ptr10 = (char*)rte_malloc(NULL, size10, RTE_CACHE_LINE_SIZE);
 	// NULL pointer returned from rte_realloc
-    ASSERT_NE(ptr10, NULL);
+    ASSERT_NE((uintptr_t)ptr10, NULL);
 	rte_free(ptr9);
 	char *ptr11 = (char*)rte_realloc(ptr10, size11, RTE_CACHE_LINE_SIZE);
-	ASSERT_NE(ptr11, NULL);
+	ASSERT_NE((uintptr_t)ptr11, NULL);
     // unexpected that realloc has not created new buffer
 	ASSERT_NE(ptr11, ptr10);
 	rte_free(ptr11);
@@ -203,7 +204,6 @@ tst_align_overlap_per_lcore(void *arg)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     CPU_SET(cpu, &cpuset);
-    int i;
 
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) != 0) {
         fprintf(stderr, "cpu %d is not runing\n", cpu);
@@ -309,7 +309,6 @@ tst_reordered_free_per_lcore(void *arg)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     CPU_SET(cpu, &cpuset);
-    int i;
 
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) != 0) {
         fprintf(stderr, "cpu %d is not runing\n", cpu);
@@ -440,7 +439,6 @@ tst_random_alloc_free(void *arg)
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
     CPU_SET(cpu, &cpuset);
-    int i;
 
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) != 0) {
         fprintf(stderr, "cpu %d is not runing\n", cpu);
@@ -571,7 +569,7 @@ test_alloc_single_socket(int32_t socket)
 			(int32_t)rte_socket_id() : socket;
 
 	/* Test rte_calloc_socket() */
-	mem = rte_calloc_socket(type, size, sizeof(char), align, socket);
+	mem = (char*)rte_calloc_socket(type, size, sizeof(char), align, socket);
 	if (mem == NULL)
 		return -1;
 	if (addr_to_socket(mem) != desired_socket) {
@@ -581,7 +579,7 @@ test_alloc_single_socket(int32_t socket)
 	rte_free(mem);
 
 	/* Test rte_malloc_socket() */
-	mem = rte_malloc_socket(type, size, align, socket);
+	mem = (char*)rte_malloc_socket(type, size, align, socket);
 	if (mem == NULL)
 		return -1;
 	if (addr_to_socket(mem) != desired_socket) {
@@ -590,7 +588,7 @@ test_alloc_single_socket(int32_t socket)
 	rte_free(mem);
 
 	/* Test rte_zmalloc_socket() */
-	mem = rte_zmalloc_socket(type, size, align, socket);
+	mem = (char*)rte_zmalloc_socket(type, size, align, socket);
 	if (mem == NULL)
 		return -1;
 	if (addr_to_socket(mem) != desired_socket) {
@@ -638,7 +636,7 @@ test_alloc_single_socket(int32_t socket)
 
 int main(int argc, char** argv)
 {
-    rte_eal_init(0, NULL);
+    rte_eal_init(argc, argv);
 
     testing::InitGoogleTest(&argc, argv);
 
