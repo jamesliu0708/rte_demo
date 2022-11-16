@@ -33,3 +33,6 @@ add_executable(tst_debug tst_debug.cc
                         ${CMAKE_CURRENT_LIST_DIR}/../lib/common/eal_common_log.c 
                         )
 target_link_libraries(tst_debug gtest pthread)
+
+add_executable(tst_malloc_master tst_malloc_master.cc
+                        librte_demo gtest pthread)
