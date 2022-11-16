@@ -356,6 +356,11 @@ map_all_hugepages(struct hugepage_file *hugepg_tbl, struct hugepage_info *hpi,
 	}
 #endif
 
+	if (access(hpi->hugedir, 0) != 0) {
+		mkdir(hpi->hugedir, 0777);
+	}
+	chmod(hpi->hugedir, 0777);
+
 	for (i = 0; i < hpi->num_pages[0]; i++) {
 		uint64_t hugepage_sz = hpi->hugepage_sz;
 
@@ -428,7 +433,25 @@ map_all_hugepages(struct hugepage_file *hugepg_tbl, struct hugepage_info *hpi,
 					strerror(errno));
 			goto out;
 		}
+		
+		/* Ensure that the file has write permissions to other users */
+		struct stat hugepg_stat;
+		int ret = stat(hugepg_tbl[i].filepath, &hugepg_stat);
+		if (ret != 0) {
+			RTE_LOG(DEBUG, EAL, "%s(): failed to get file %s permission: %s\n", __func__, hugepg_tbl[i].filepath, strerror(errno));
+			goto out;
+		}
 
+		if ((hugepg_stat.st_mode & S_IRUSR) == 0 || (hugepg_stat.st_mode & S_IWUSR) == 0 ||
+			(hugepg_stat.st_mode & S_IRGRP) == 0 || (hugepg_stat.st_mode & S_IWGRP) == 0 ||
+			(hugepg_stat.st_mode & S_IROTH) == 0 || (hugepg_stat.st_mode & S_IWOTH) == 0) {
+			RTE_LOG(DEBUG, EAL, "File permissions are not equal to 0666, possibly due to the user's permission mask\n");
+			ret = chmod(hugepg_tbl[i].filepath, 0666);
+			if (ret != 0) {
+				RTE_LOG(DEBUG, EAL, "%s(): Resetting file %s permissions failed: %s\n", __func__, hugepg_tbl[i].filepath, strerror(errno));
+				goto out;
+			}
+		}
 		/* map the segment, and populate page tables,
 		 * the kernel fills this segment with zeros */
 		virtaddr = mmap(vma_addr, hugepage_sz, PROT_READ | PROT_WRITE,
@@ -634,9 +657,30 @@ static void *
 create_shared_memory(const char *filename, const size_t mem_size)
 {
 	void *retval;
-	int fd = open(filename, O_CREAT | O_RDWR, 0666);
+	int fd = open(filename, O_CREAT | O_RDWR, 0644);
 	if (fd < 0)
 		return NULL;
+	
+	/* Ensure that the file has read permissions to other users */
+	struct stat file_stat;
+	int ret = stat(filename, &file_stat);
+	if (ret != 0) {
+		close(fd);
+		RTE_LOG(DEBUG, EAL, "%s(): failed to get file %s permission: %s\n", __func__, filename, strerror(errno));
+		return NULL;
+	}
+
+	if ((file_stat.st_mode & S_IRUSR) == 0 || (file_stat.st_mode & S_IWUSR) == 0 ||
+		(file_stat.st_mode & S_IRGRP) == 0 || (file_stat.st_mode & S_IROTH) == 0) {
+		RTE_LOG(DEBUG, EAL, "File permissions are not equal to 0644, possibly due to the user's permission mask\n");
+		ret = chmod(filename, 0644);
+		if (ret != 0) {
+			close(fd);
+			RTE_LOG(DEBUG, EAL, "%s(): Resetting file %s permissions failed: %s\n", __func__, filename, strerror(errno));
+			return NULL;
+		}
+	}
+
 	if (ftruncate(fd, mem_size) < 0) {
 		close(fd);
 		return NULL;
