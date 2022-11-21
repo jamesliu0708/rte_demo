@@ -135,27 +135,28 @@ rte_eal_config_create(void)
 		rte_cfg_addr = NULL;
 
 	if (mem_cfg_fd < 0){
-		mem_cfg_fd = open(pathname, O_RDWR | O_CREAT, 0644);
+		mem_cfg_fd = open(pathname, O_RDWR | O_CREAT, 0666);
 		if (mem_cfg_fd < 0)
 			rte_exit(EXIT_FAILURE, "Cannot open '%s' for rte_mem_config\n", pathname);
 
 		/* Ensure that the file has read permissions to other users */
-	struct stat file_stat;
-	int ret = stat(pathname, &file_stat);
-	if (ret != 0) {
-		close(mem_cfg_fd);
-		rte_exit(EXIT_FAILURE, "%s(): failed to get file %s permission: %s\n", __func__, pathname, strerror(errno));
-	}
-
-	if ((file_stat.st_mode & S_IRUSR) == 0 || (file_stat.st_mode & S_IWUSR) == 0 ||
-		(file_stat.st_mode & S_IRGRP) == 0 || (file_stat.st_mode & S_IROTH) == 0) {
-		RTE_LOG(DEBUG, EAL, "File permissions are not equal to 0644, possibly due to the user's permission mask\n");
-		ret = chmod(pathname, 0644);
+		struct stat file_stat;
+		int ret = stat(pathname, &file_stat);
 		if (ret != 0) {
 			close(mem_cfg_fd);
-			rte_exit(EXIT_FAILURE, "%s(): Resetting file %s permissions failed: %s\n", __func__, pathname, strerror(errno));
+			rte_exit(EXIT_FAILURE, "%s(): failed to get file %s permission: %s\n", __func__, pathname, strerror(errno));
 		}
-	}	
+
+		if ((file_stat.st_mode & S_IRUSR) == 0 || (file_stat.st_mode & S_IWUSR) == 0 ||
+			(file_stat.st_mode & S_IRGRP) == 0 || (file_stat.st_mode & S_IWGRP) == 0 ||
+			(file_stat.st_mode & S_IROTH) == 0 || (file_stat.st_mode & S_IWOTH) == 0) {
+			RTE_LOG(DEBUG, EAL, "File permissions are not equal to 0666, possibly due to the user's permission mask\n");
+			ret = chmod(pathname, 0666);
+			if (ret != 0) {
+				close(mem_cfg_fd);
+				rte_exit(EXIT_FAILURE, "%s(): Resetting file %s permissions failed: %s\n", __func__, pathname, strerror(errno));
+			}
+		}
 	}
 
 	retval = ftruncate(mem_cfg_fd, sizeof(*rte_config.mem_config) + sizeof(*rte_config.cpu_config));
@@ -199,7 +200,7 @@ rte_eal_config_attach(void)
 	const char *pathname = eal_runtime_config_path();
 
 	if (mem_cfg_fd < 0){
-		mem_cfg_fd = open(pathname, O_RDONLY);
+		mem_cfg_fd = open(pathname, O_RDWR);
 		if (mem_cfg_fd < 0)
 			rte_panic("Cannot open '%s' for rte_mem_config\n", pathname);
 	}
@@ -232,7 +233,7 @@ rte_eal_config_reattach(void)
 
 	/* remap the config at proper address */
 	mem_config = (struct rte_mem_config *) mmap(rte_mem_cfg_addr,
-			sizeof(*mem_config), PROT_READ, MAP_SHARED,
+			sizeof(*mem_config), PROT_READ | PROT_WRITE, MAP_SHARED,
 			mem_cfg_fd, 0);
 	if (mem_config == MAP_FAILED || mem_config != rte_mem_cfg_addr) {
 		if (mem_config != MAP_FAILED)

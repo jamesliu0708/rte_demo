@@ -359,7 +359,24 @@ map_all_hugepages(struct hugepage_file *hugepg_tbl, struct hugepage_info *hpi,
 	if (access(hpi->hugedir, 0) != 0) {
 		mkdir(hpi->hugedir, 0777);
 	}
-	chmod(hpi->hugedir, 0777);
+
+	struct stat hugedir_stat;
+	int ret = stat(hpi->hugedir, &hugedir_stat);
+	if (ret != 0) {
+		RTE_LOG(DEBUG, EAL, "%s(): failed to get file %s permission: %s\n", __func__, hpi->hugedir, strerror(errno));
+		goto out;
+	}
+
+	if ((hugedir_stat.st_mode & S_IRUSR) == 0 || (hugedir_stat.st_mode & S_IWUSR) == 0 ||
+		(hugedir_stat.st_mode & S_IRGRP) == 0 || (hugedir_stat.st_mode & S_IWGRP) == 0 ||
+		(hugedir_stat.st_mode & S_IROTH) == 0 || (hugedir_stat.st_mode & S_IWOTH) == 0) {
+		RTE_LOG(DEBUG, EAL, "File permissions are not equal to 0666, possibly due to the user's permission mask\n");
+		ret = chmod(hpi->hugedir, 0777);
+		if (ret != 0) {
+			RTE_LOG(DEBUG, EAL, "%s(): Resetting file %s permissions failed: %s\n", __func__, hpi->hugedir, strerror(errno));
+			goto out;
+		}
+	}
 
 	for (i = 0; i < hpi->num_pages[0]; i++) {
 		uint64_t hugepage_sz = hpi->hugepage_sz;
