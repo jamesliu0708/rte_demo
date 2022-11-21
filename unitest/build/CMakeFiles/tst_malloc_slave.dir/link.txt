@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/tst_malloc_slave.dir/tst_malloc_slave.cc.o -o tst_malloc_slave   -L/home/james/work/rte_demo/unitest/../output  -L/home/james/work/rte_demo/unitest/../lib/build  -Wl,-rpath,/home/james/work/rte_demo/unitest/../output:/home/james/work/rte_demo/unitest/../lib/build -lrte_demo -lgtest -lpthread 

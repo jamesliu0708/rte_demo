@@ -200,6 +200,8 @@ is_aligned(void *p, int align)
 void *
 tst_align_overlap_per_lcore(void *arg)
 {
+	int* ret = (int*)malloc(sizeof(int));
+	*ret = 0;
 	int cpu = *(int*)arg - 1;
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
@@ -208,6 +210,8 @@ tst_align_overlap_per_lcore(void *arg)
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset) != 0) {
         fprintf(stderr, "cpu %d is not runing\n", cpu);
         perror("");
+		*ret = -1;
+		pthread_exit((void*)ret);
         return NULL;
     }
 
@@ -216,66 +220,67 @@ tst_align_overlap_per_lcore(void *arg)
 			align3 = 2048;
 	unsigned i,j;
 	void *p1 = NULL, *p2 = NULL, *p3 = NULL;
-	int ret = 0;
 
 	for (i = 0; i < N; i++) {
 		p1 = rte_zmalloc("dummy", 1000, align1);
 		if (!p1){
 			printf("rte_zmalloc returned NULL (i=%u)\n", i);
-			ret = -1;
+			*ret = -2;
 			break;
 		}
 		for(j = 0; j < 1000 ; j++) {
 			if( *(char *)p1 != 0) {
 				printf("rte_zmalloc didn't zero the allocated memory\n");
-				ret = -1;
+				*ret = -3;
+				rte_free(p1);
+				pthread_exit((void*)&ret);
 			}
 		}
 		p2 = rte_malloc("dummy", 1000, align2);
 		if (!p2){
 			printf("rte_malloc returned NULL (i=%u)\n", i);
-			ret = -1;
+			*ret = -4;
 			rte_free(p1);
 			break;
 		}
 		p3 = rte_malloc("dummy", 1000, align3);
 		if (!p3){
 			printf("rte_malloc returned NULL (i=%u)\n", i);
-			ret = -1;
+			*ret = -5;
 			rte_free(p1);
 			rte_free(p2);
 			break;
 		}
 		if (is_memory_overlap(p1, 1000, p2, 1000)) {
 			printf("p1 and p2 overlaps\n");
-			ret = -1;
+			*ret = -6;
 		}
 		if (is_memory_overlap(p2, 1000, p3, 1000)) {
 			printf("p2 and p3 overlaps\n");
-			ret = -1;
+			*ret = -7;
 		}
 		if (is_memory_overlap(p1, 1000, p3, 1000)) {
 			printf("p1 and p3 overlaps\n");
-			ret = -1;
+			*ret = -8;
 		}
 		if (!is_aligned(p1, align1)) {
 			printf("p1 is not aligned\n");
-			ret = -1;
+			*ret = -9;
 		}
 		if (!is_aligned(p2, align2)) {
 			printf("p2 is not aligned\n");
-			ret = -1;
+			*ret = -10;
 		}
 		if (!is_aligned(p3, align3)) {
 			printf("p3 is not aligned\n");
-			ret = -1;
+			*ret = -11;
 		}
 		rte_free(p1);
 		rte_free(p2);
 		rte_free(p3);
 	}
 	rte_malloc_dump_stats(stdout, "dummy");
-	pthread_exit((void*)&ret);
+	pthread_exit((void*)ret);
 	return NULL;
 }
 
@@ -298,13 +303,18 @@ TEST(test_malloc, test_align_overlap_per_lcore)
 
 	for(int i = 0; i < ncpus; ++i)
 	{
-		pthread_join(tid_list[i], NULL);
+		int* pret;
+		pthread_join(tid_list[i], (void**)&pret);
+		ASSERT_EQ(*pret, 0);
+		free(pret);
 	}
 }
 
 void*
 tst_reordered_free_per_lcore(void *arg)
 {
+	int* ret = (int*)malloc(sizeof(int));
+	*ret = 0;
 	int cpu = *(int*)arg - 1;
     cpu_set_t cpuset;
     CPU_ZERO(&cpuset);
@@ -321,19 +331,20 @@ tst_reordered_free_per_lcore(void *arg)
 			align3 = 2048;
 	unsigned i,j;
 	void *p1, *p2, *p3;
-	int ret = 0;
 
 	for (i = 0; i < 30; i++) {
 		p1 = rte_zmalloc("dummy", 1000, align1);
 		if (!p1){
 			printf("rte_zmalloc returned NULL (i=%u)\n", i);
-			ret = -1;
+			*ret = -1;
 			break;
 		}
 		for(j = 0; j < 1000 ; j++) {
 			if( *(char *)p1 != 0) {
 				printf("rte_zmalloc didn't zero the allocated memory\n");
-				ret = -1;
+				*ret = -1;
+				pthread_exit((void*)ret);
+				return NULL;
 			}
 		}
 		/* use calloc to allocate 1000 16-byte items this time */
@@ -342,32 +353,56 @@ tst_reordered_free_per_lcore(void *arg)
 		p3 = rte_malloc("dummy", 1000, align3);
 		if (!p2 || !p3){
 			printf("rte_malloc returned NULL (i=%u)\n", i);
-			ret = -1;
+			*ret = -2;
 			break;
 		}
 		if (is_memory_overlap(p1, 1000, p2, 1000)) {
 			printf("p1 and p2 overlaps\n");
-			ret = -1;
+			*ret = -3;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		if (is_memory_overlap(p2, 1000, p3, 1000)) {
 			printf("p2 and p3 overlaps\n");
-			ret = -1;
+			*ret = -4;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		if (is_memory_overlap(p1, 1000, p3, 1000)) {
 			printf("p1 and p3 overlaps\n");
-			ret = -1;
+			*ret = -5;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		if (!is_aligned(p1, align1)) {
 			printf("p1 is not aligned\n");
-			ret = -1;
+			*ret = -6;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		if (!is_aligned(p2, align2)) {
 			printf("p2 is not aligned\n");
-			ret = -1;
+			*ret = -7;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		if (!is_aligned(p3, align3)) {
 			printf("p3 is not aligned\n");
-			ret = -1;
+			*ret = -8;
+			rte_free(p2);
+			rte_free(p1);
+			rte_free(p3);
+			break;
 		}
 		/* try freeing in every possible order */
 		switch (i%6){
@@ -428,7 +463,10 @@ TEST(test_malloc, test_reordered_free_per_lcore)
 
 	for(int i = 0; i < ncpus; ++i)
 	{
-		pthread_join(tid_list[i], NULL);
+		int* pret;
+		pthread_join(tid_list[i], (void**)&pret);
+		ASSERT_EQ(*pret, 0);
+		free(pret);
 	}
 }
 

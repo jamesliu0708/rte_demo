@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/tst_atomic.dir/tst_atomic.cc.o -o tst_atomic  -lgtest -lpthread 

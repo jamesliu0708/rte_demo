@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/tst_log.dir/tst_log.cc.o CMakeFiles/tst_log.dir/home/james/work/rte_demo/lib/common/eal_common_log.c.o -o tst_log 

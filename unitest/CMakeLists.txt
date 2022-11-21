@@ -19,7 +19,7 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/../lib/linuxapp)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../lib/librte_ring)
 
 add_executable(tst_memcpy tst_memcpy.cc)
-target_link_libraries(tst_memcpy gtest)
+target_link_libraries(tst_memcpy gtest pthread)
 
 add_executable(tst_memcpy_perf tst_memcpy_perf.cc)
 
@@ -36,4 +36,10 @@ target_link_libraries(tst_debug gtest pthread)
 
 add_executable(tst_malloc_master tst_malloc_master.cc)
 target_link_directories(tst_malloc_master PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
+target_link_directories(tst_malloc_master PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
 target_link_libraries(tst_malloc_master rte_demo gtest pthread)
+
+add_executable(tst_malloc_slave tst_malloc_slave.cc)
+target_link_directories(tst_malloc_slave PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
+target_link_directories(tst_malloc_slave PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_malloc_slave rte_demo gtest pthread)

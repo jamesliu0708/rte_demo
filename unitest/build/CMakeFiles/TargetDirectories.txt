@@ -1,0 +1,9 @@
+/home/james/work/rte_demo/unitest/build/CMakeFiles/edit_cache.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_malloc_slave.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/rebuild_cache.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_debug.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_malloc_master.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_memcpy.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_memcpy_perf.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_atomic.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_log.dir

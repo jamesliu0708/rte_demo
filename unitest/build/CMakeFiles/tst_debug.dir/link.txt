@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/tst_debug.dir/tst_debug.cc.o CMakeFiles/tst_debug.dir/home/james/work/rte_demo/lib/linuxapp/eal/eal_debug.c.o CMakeFiles/tst_debug.dir/home/james/work/rte_demo/lib/common/eal_common_log.c.o -o tst_debug  -lgtest -lpthread 
