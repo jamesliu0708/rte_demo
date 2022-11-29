@@ -465,6 +465,30 @@ common/rte_malloc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rte_demo.dir/build.make CMakeFiles/rte_demo.dir/common/rte_malloc.c.s
 .PHONY : common/rte_malloc.c.s
 
+driver/ring/rte_mempool_ring.o: driver/ring/rte_mempool_ring.c.o
+.PHONY : driver/ring/rte_mempool_ring.o
+
+# target to build an object file
+driver/ring/rte_mempool_ring.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rte_demo.dir/build.make CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o
+.PHONY : driver/ring/rte_mempool_ring.c.o
+
+driver/ring/rte_mempool_ring.i: driver/ring/rte_mempool_ring.c.i
+.PHONY : driver/ring/rte_mempool_ring.i
+
+# target to preprocess a source file
+driver/ring/rte_mempool_ring.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rte_demo.dir/build.make CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.i
+.PHONY : driver/ring/rte_mempool_ring.c.i
+
+driver/ring/rte_mempool_ring.s: driver/ring/rte_mempool_ring.c.s
+.PHONY : driver/ring/rte_mempool_ring.s
+
+# target to generate assembly for a file
+driver/ring/rte_mempool_ring.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rte_demo.dir/build.make CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.s
+.PHONY : driver/ring/rte_mempool_ring.c.s
+
 librte_mempool/rte_mempool.o: librte_mempool/rte_mempool.c.o
 .PHONY : librte_mempool/rte_mempool.o
 
@@ -756,6 +780,9 @@ help:
 	@echo "... common/rte_malloc.o"
 	@echo "... common/rte_malloc.i"
 	@echo "... common/rte_malloc.s"
+	@echo "... driver/ring/rte_mempool_ring.o"
+	@echo "... driver/ring/rte_mempool_ring.i"
+	@echo "... driver/ring/rte_mempool_ring.s"
 	@echo "... librte_mempool/rte_mempool.o"
 	@echo "... librte_mempool/rte_mempool.i"
 	@echo "... librte_mempool/rte_mempool.s"

@@ -27,6 +27,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/rte_demo.dir/common/malloc_heap.c.o.d"
   "CMakeFiles/rte_demo.dir/common/rte_malloc.c.o"
   "CMakeFiles/rte_demo.dir/common/rte_malloc.c.o.d"
+  "CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o"
+  "CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o.d"
   "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o"
   "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o.d"
   "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o"

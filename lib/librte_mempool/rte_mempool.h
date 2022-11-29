@@ -784,6 +784,32 @@ uint32_t rte_mempool_mem_iter(struct rte_mempool *mp,
 void rte_mempool_dump(FILE *f, struct rte_mempool *mp);
 
 /**
+ * Create a user-owned mempool cache.
+ *
+ * This can be used by non-EAL threads to enable caching when they
+ * interact with a mempool.
+ *
+ * @param size
+ *   The size of the mempool cache. See rte_mempool_create()'s cache_size
+ *   parameter description for more information. The same limits and
+ *   considerations apply here too.
+ * @param socket_id
+ *   The socket identifier in the case of NUMA. The value can be
+ *   SOCKET_ID_ANY if there is no NUMA constraint for the reserved zone.
+ */
+struct rte_mempool_cache *
+rte_mempool_cache_create(uint32_t size, int socket_id);
+
+/**
+ * Free a user-owned mempool cache.
+ *
+ * @param cache
+ *   A pointer to the mempool cache.
+ */
+void
+rte_mempool_cache_free(struct rte_mempool_cache *cache);
+
+/**
  * Flush a user-owned mempool cache to the specified mempool.
  *
  * @param cache

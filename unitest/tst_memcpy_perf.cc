@@ -4,7 +4,6 @@
 #include <sys/time.h>
 #include "rte_memcpy.h"
 #include "rte_random.h"
-#include "rte_cycles.h"
 
 /*
  * Set this to the maximum buffer size you want to test. If it is 0, then the
@@ -48,6 +47,24 @@ static size_t buf_sizes[TEST_VALUE_RANGE];
  */
 static uint8_t *large_buf_read, *large_buf_write;
 static uint8_t *small_buf_read, *small_buf_write;
+
+static inline uint64_t
+rte_rdtsc(void)
+{
+	union {
+		uint64_t tsc_64;
+		RTE_STD_C11
+		struct {
+			uint32_t lo_32;
+			uint32_t hi_32;
+		};
+	} tsc;
+
+	asm volatile("rdtsc" :
+		     "=a" (tsc.lo_32),
+		     "=d" (tsc.hi_32));
+	return tsc.tsc_64;
+}
 
 /* Initialise data buffers. */
 static int

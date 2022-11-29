@@ -1,13 +1,30 @@
 #include "rte_malloc.h"
 #include "rte_eal.h"
 #include "rte_common.h"
-#include "rte_cycles.h"
 #include "rte_random.h"
 #include "rte_lcore.h"
 
 #include <gtest/gtest.h>
 
 #define N 10000
+
+static inline uint64_t
+rte_rdtsc(void)
+{
+	union {
+		uint64_t tsc_64;
+		RTE_STD_C11
+		struct {
+			uint32_t lo_32;
+			uint32_t hi_32;
+		};
+	} tsc;
+
+	asm volatile("rdtsc" :
+		     "=a" (tsc.lo_32),
+		     "=d" (tsc.hi_32));
+	return tsc.tsc_64;
+}
 
 TEST(test_malloc, test_str_to_size)
 {
@@ -440,7 +457,7 @@ tst_reordered_free_per_lcore(void *arg)
 	}
 	rte_malloc_dump_stats(stdout, "dummy");
 
-	pthread_exit((void*)&ret);
+	pthread_exit((void*)ret);
 	return NULL;
 }
 
@@ -674,8 +691,19 @@ test_alloc_single_socket(int32_t socket)
 
 int main(int argc, char** argv)
 {
-    rte_eal_init(argc, argv);
-
+#ifdef MASTER
+    int ret = rte_eal_init(argc, argv);
+	if (ret < 0) {
+        fprintf(stderr, "Failed to init rte\n");
+        exit(-1);
+    }
+#else
+	int ret = rte_eal_attach(argc, argv);
+	if (ret < 0) {
+		fprintf(stderr, "Failed to attach rte\n");
+		exit(-1);
+	}
+#endif // MASTER
     testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();

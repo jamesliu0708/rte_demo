@@ -63,13 +63,16 @@ CMAKE_BINARY_DIR = /home/james/work/rte_demo/unitest/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/tst_malloc_slave.dir/all
-all: CMakeFiles/tst_debug.dir/all
-all: CMakeFiles/tst_malloc_master.dir/all
-all: CMakeFiles/tst_memcpy.dir/all
-all: CMakeFiles/tst_memcpy_perf.dir/all
 all: CMakeFiles/tst_atomic.dir/all
+all: CMakeFiles/tst_memcpy.dir/all
+all: CMakeFiles/tst_debug.dir/all
 all: CMakeFiles/tst_log.dir/all
+all: CMakeFiles/tst_memcpy_perf.dir/all
+all: CMakeFiles/tst_malloc.dir/all
+all: CMakeFiles/tst_ring.dir/all
+all: CMakeFiles/tst_memory.dir/all
+all: CMakeFiles/tst_memzone.dir/all
+all: CMakeFiles/tst_mempool.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -77,144 +80,17 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/tst_malloc_slave.dir/clean
-clean: CMakeFiles/tst_debug.dir/clean
-clean: CMakeFiles/tst_malloc_master.dir/clean
-clean: CMakeFiles/tst_memcpy.dir/clean
-clean: CMakeFiles/tst_memcpy_perf.dir/clean
 clean: CMakeFiles/tst_atomic.dir/clean
+clean: CMakeFiles/tst_memcpy.dir/clean
+clean: CMakeFiles/tst_debug.dir/clean
 clean: CMakeFiles/tst_log.dir/clean
+clean: CMakeFiles/tst_memcpy_perf.dir/clean
+clean: CMakeFiles/tst_malloc.dir/clean
+clean: CMakeFiles/tst_ring.dir/clean
+clean: CMakeFiles/tst_memory.dir/clean
+clean: CMakeFiles/tst_memzone.dir/clean
+clean: CMakeFiles/tst_mempool.dir/clean
 .PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tst_malloc_slave.dir
-
-# All Build rule for target.
-CMakeFiles/tst_malloc_slave.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=12,13 "Built target tst_malloc_slave"
-.PHONY : CMakeFiles/tst_malloc_slave.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tst_malloc_slave.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_malloc_slave.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
-.PHONY : CMakeFiles/tst_malloc_slave.dir/rule
-
-# Convenience name for target.
-tst_malloc_slave: CMakeFiles/tst_malloc_slave.dir/rule
-.PHONY : tst_malloc_slave
-
-# clean rule for target.
-CMakeFiles/tst_malloc_slave.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/clean
-.PHONY : CMakeFiles/tst_malloc_slave.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tst_debug.dir
-
-# All Build rule for target.
-CMakeFiles/tst_debug.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=3,4,5,6 "Built target tst_debug"
-.PHONY : CMakeFiles/tst_debug.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tst_debug.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_debug.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
-.PHONY : CMakeFiles/tst_debug.dir/rule
-
-# Convenience name for target.
-tst_debug: CMakeFiles/tst_debug.dir/rule
-.PHONY : tst_debug
-
-# clean rule for target.
-CMakeFiles/tst_debug.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/clean
-.PHONY : CMakeFiles/tst_debug.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tst_malloc_master.dir
-
-# All Build rule for target.
-CMakeFiles/tst_malloc_master.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=10,11 "Built target tst_malloc_master"
-.PHONY : CMakeFiles/tst_malloc_master.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tst_malloc_master.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_malloc_master.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
-.PHONY : CMakeFiles/tst_malloc_master.dir/rule
-
-# Convenience name for target.
-tst_malloc_master: CMakeFiles/tst_malloc_master.dir/rule
-.PHONY : tst_malloc_master
-
-# clean rule for target.
-CMakeFiles/tst_malloc_master.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/clean
-.PHONY : CMakeFiles/tst_malloc_master.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tst_memcpy.dir
-
-# All Build rule for target.
-CMakeFiles/tst_memcpy.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=14,15 "Built target tst_memcpy"
-.PHONY : CMakeFiles/tst_memcpy.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tst_memcpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memcpy.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
-.PHONY : CMakeFiles/tst_memcpy.dir/rule
-
-# Convenience name for target.
-tst_memcpy: CMakeFiles/tst_memcpy.dir/rule
-.PHONY : tst_memcpy
-
-# clean rule for target.
-CMakeFiles/tst_memcpy.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/clean
-.PHONY : CMakeFiles/tst_memcpy.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tst_memcpy_perf.dir
-
-# All Build rule for target.
-CMakeFiles/tst_memcpy_perf.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=16,17 "Built target tst_memcpy_perf"
-.PHONY : CMakeFiles/tst_memcpy_perf.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tst_memcpy_perf.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memcpy_perf.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
-.PHONY : CMakeFiles/tst_memcpy_perf.dir/rule
-
-# Convenience name for target.
-tst_memcpy_perf: CMakeFiles/tst_memcpy_perf.dir/rule
-.PHONY : tst_memcpy_perf
-
-# clean rule for target.
-CMakeFiles/tst_memcpy_perf.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/clean
-.PHONY : CMakeFiles/tst_memcpy_perf.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/tst_atomic.dir
@@ -243,6 +119,58 @@ CMakeFiles/tst_atomic.dir/clean:
 .PHONY : CMakeFiles/tst_atomic.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/tst_memcpy.dir
+
+# All Build rule for target.
+CMakeFiles/tst_memcpy.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=12,13 "Built target tst_memcpy"
+.PHONY : CMakeFiles/tst_memcpy.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_memcpy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memcpy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_memcpy.dir/rule
+
+# Convenience name for target.
+tst_memcpy: CMakeFiles/tst_memcpy.dir/rule
+.PHONY : tst_memcpy
+
+# clean rule for target.
+CMakeFiles/tst_memcpy.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy.dir/build.make CMakeFiles/tst_memcpy.dir/clean
+.PHONY : CMakeFiles/tst_memcpy.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_debug.dir
+
+# All Build rule for target.
+CMakeFiles/tst_debug.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=3,4,5,6 "Built target tst_debug"
+.PHONY : CMakeFiles/tst_debug.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_debug.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 4
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_debug.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_debug.dir/rule
+
+# Convenience name for target.
+tst_debug: CMakeFiles/tst_debug.dir/rule
+.PHONY : tst_debug
+
+# clean rule for target.
+CMakeFiles/tst_debug.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/clean
+.PHONY : CMakeFiles/tst_debug.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/tst_log.dir
 
 # All Build rule for target.
@@ -267,6 +195,162 @@ tst_log: CMakeFiles/tst_log.dir/rule
 CMakeFiles/tst_log.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_log.dir/build.make CMakeFiles/tst_log.dir/clean
 .PHONY : CMakeFiles/tst_log.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_memcpy_perf.dir
+
+# All Build rule for target.
+CMakeFiles/tst_memcpy_perf.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=14,15 "Built target tst_memcpy_perf"
+.PHONY : CMakeFiles/tst_memcpy_perf.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_memcpy_perf.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memcpy_perf.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_memcpy_perf.dir/rule
+
+# Convenience name for target.
+tst_memcpy_perf: CMakeFiles/tst_memcpy_perf.dir/rule
+.PHONY : tst_memcpy_perf
+
+# clean rule for target.
+CMakeFiles/tst_memcpy_perf.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/clean
+.PHONY : CMakeFiles/tst_memcpy_perf.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_malloc.dir
+
+# All Build rule for target.
+CMakeFiles/tst_malloc.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=10,11 "Built target tst_malloc"
+.PHONY : CMakeFiles/tst_malloc.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_malloc.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_malloc.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_malloc.dir/rule
+
+# Convenience name for target.
+tst_malloc: CMakeFiles/tst_malloc.dir/rule
+.PHONY : tst_malloc
+
+# clean rule for target.
+CMakeFiles/tst_malloc.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/clean
+.PHONY : CMakeFiles/tst_malloc.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_ring.dir
+
+# All Build rule for target.
+CMakeFiles/tst_ring.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=22,23 "Built target tst_ring"
+.PHONY : CMakeFiles/tst_ring.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_ring.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_ring.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_ring.dir/rule
+
+# Convenience name for target.
+tst_ring: CMakeFiles/tst_ring.dir/rule
+.PHONY : tst_ring
+
+# clean rule for target.
+CMakeFiles/tst_ring.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/clean
+.PHONY : CMakeFiles/tst_ring.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_memory.dir
+
+# All Build rule for target.
+CMakeFiles/tst_memory.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=16,17 "Built target tst_memory"
+.PHONY : CMakeFiles/tst_memory.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_memory.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memory.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_memory.dir/rule
+
+# Convenience name for target.
+tst_memory: CMakeFiles/tst_memory.dir/rule
+.PHONY : tst_memory
+
+# clean rule for target.
+CMakeFiles/tst_memory.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/clean
+.PHONY : CMakeFiles/tst_memory.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_memzone.dir
+
+# All Build rule for target.
+CMakeFiles/tst_memzone.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=20,21 "Built target tst_memzone"
+.PHONY : CMakeFiles/tst_memzone.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_memzone.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_memzone.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_memzone.dir/rule
+
+# Convenience name for target.
+tst_memzone: CMakeFiles/tst_memzone.dir/rule
+.PHONY : tst_memzone
+
+# clean rule for target.
+CMakeFiles/tst_memzone.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/clean
+.PHONY : CMakeFiles/tst_memzone.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_mempool.dir
+
+# All Build rule for target.
+CMakeFiles/tst_mempool.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=18,19 "Built target tst_mempool"
+.PHONY : CMakeFiles/tst_mempool.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_mempool.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_mempool.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_mempool.dir/rule
+
+# Convenience name for target.
+tst_mempool: CMakeFiles/tst_mempool.dir/rule
+.PHONY : tst_mempool
+
+# clean rule for target.
+CMakeFiles/tst_mempool.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/clean
+.PHONY : CMakeFiles/tst_mempool.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

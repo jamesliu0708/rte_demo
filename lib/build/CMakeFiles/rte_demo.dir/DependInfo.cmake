@@ -22,6 +22,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/james/work/rte_demo/lib/common/malloc_elem.c" "CMakeFiles/rte_demo.dir/common/malloc_elem.c.o" "gcc" "CMakeFiles/rte_demo.dir/common/malloc_elem.c.o.d"
   "/home/james/work/rte_demo/lib/common/malloc_heap.c" "CMakeFiles/rte_demo.dir/common/malloc_heap.c.o" "gcc" "CMakeFiles/rte_demo.dir/common/malloc_heap.c.o.d"
   "/home/james/work/rte_demo/lib/common/rte_malloc.c" "CMakeFiles/rte_demo.dir/common/rte_malloc.c.o" "gcc" "CMakeFiles/rte_demo.dir/common/rte_malloc.c.o.d"
+  "/home/james/work/rte_demo/lib/driver/ring/rte_mempool_ring.c" "CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o" "gcc" "CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o.d"
   "/home/james/work/rte_demo/lib/librte_mempool/rte_mempool.c" "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o" "gcc" "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o.d"
   "/home/james/work/rte_demo/lib/librte_mempool/rte_mempool_ops.c" "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o" "gcc" "CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o.d"
   "/home/james/work/rte_demo/lib/librte_ring/rte_ring.c" "CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o" "gcc" "CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o.d"

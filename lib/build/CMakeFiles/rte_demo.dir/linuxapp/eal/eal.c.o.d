@@ -123,8 +123,6 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o: \
  /home/james/work/rte_demo/lib/common/include/arch/x86/rte_spinlock.h \
  /home/james/work/rte_demo/lib/common/include/rte_errno.h \
  /home/james/work/rte_demo/lib/common/include/rte_log.h \
- /home/james/work/rte_demo/lib/common/include/arch/x86/rte_cycles.h \
- /home/james/work/rte_demo/lib/common/include/generic/rte_cycles.h \
  /home/james/work/rte_demo/lib/common/include/rte_string_fns.h \
  /home/james/work/rte_demo/lib/common/include/arch/x86/rte_cpuflags.h \
  /home/james/work/rte_demo/lib/common/include/rte_version.h \

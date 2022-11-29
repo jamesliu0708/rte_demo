@@ -167,13 +167,4 @@ CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.o
  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h
  /usr/include/x86_64-linux-gnu/bits/uio_lim.h
  /home/james/work/rte_demo/unitest/rte_random.h
- /home/james/work/rte_demo/lib/common/include/arch/x86/rte_cycles.h
- /home/james/work/rte_demo/lib/common/include/generic/rte_cycles.h
- /home/james/work/rte_demo/lib/common/include/rte_debug.h
- /home/james/work/rte_demo/lib/common/include/rte_log.h
- /home/james/work/rte_demo/lib/common/include/rte_branch_prediction.h
- /home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic.h
- /home/james/work/rte_demo/lib/common/include/generic/rte_atomic.h
- /home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic_64.h
- /home/james/work/rte_demo/lib/common/include/rte_branch_prediction.h
 

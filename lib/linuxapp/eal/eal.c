@@ -30,7 +30,6 @@
 #include <rte_per_lcore.h>
 #include <rte_lcore.h>
 #include <rte_log.h>
-#include <rte_cycles.h>
 #include <rte_string_fns.h>
 #include <rte_cpuflags.h>
 #include <rte_version.h>
@@ -621,6 +620,12 @@ rte_eal_attach(int argc, char** argv)
 		return -1;
 	}
 
+	if (rte_eal_tailqs_init() < 0) {
+		rte_eal_init_alert("Cannot init tail queues for objects\n");
+		rte_errno = EFAULT;
+		return -1;
+	}
+	
 	return 0;
 }
 

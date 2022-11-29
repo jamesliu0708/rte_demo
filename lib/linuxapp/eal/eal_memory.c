@@ -1356,7 +1356,7 @@ rte_eal_hugepage_attach(void)
 				"into secondary processes\n");
 	}
 
-	test_phys_addrs_available();
+	phys_addrs_available = false;
 
 	fd_zero = open("/dev/zero", O_RDONLY);
 	if (fd_zero < 0) {

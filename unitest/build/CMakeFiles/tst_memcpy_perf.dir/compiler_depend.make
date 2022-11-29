@@ -165,27 +165,8 @@ CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.o: ../tst_memcpy_perf.cc \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
   /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
-  ../rte_random.h \
-  /home/james/work/rte_demo/lib/common/include/arch/x86/rte_cycles.h \
-  /home/james/work/rte_demo/lib/common/include/generic/rte_cycles.h \
-  /home/james/work/rte_demo/lib/common/include/rte_debug.h \
-  /home/james/work/rte_demo/lib/common/include/rte_log.h \
-  /home/james/work/rte_demo/lib/common/include/rte_branch_prediction.h \
-  /home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic.h \
-  /home/james/work/rte_demo/lib/common/include/generic/rte_atomic.h \
-  /home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic_64.h \
-  /home/james/work/rte_demo/lib/common/include/rte_branch_prediction.h
+  ../rte_random.h
 
-
-/home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic_64.h:
-
-/home/james/work/rte_demo/lib/common/include/generic/rte_atomic.h:
-
-/home/james/work/rte_demo/lib/common/include/rte_branch_prediction.h:
-
-/home/james/work/rte_demo/lib/common/include/rte_log.h:
-
-/home/james/work/rte_demo/lib/common/include/arch/x86/rte_cycles.h:
 
 /usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
 
@@ -259,8 +240,6 @@ CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.o: ../tst_memcpy_perf.cc \
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/avx512vlintrin.h:
 
-/home/james/work/rte_demo/lib/common/include/generic/rte_cycles.h:
-
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
@@ -318,8 +297,6 @@ CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.o: ../tst_memcpy_perf.cc \
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/c++/9/stdlib.h:
-
-/home/james/work/rte_demo/lib/common/include/rte_debug.h:
 
 /usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
@@ -380,8 +357,6 @@ CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.o: ../tst_memcpy_perf.cc \
 /usr/include/c++/9/cstdlib:
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
-
-/home/james/work/rte_demo/lib/common/include/arch/x86/rte_atomic.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 

@@ -434,6 +434,45 @@ mempool_cache_init(struct rte_mempool_cache *cache, uint32_t size)
 	cache->len = 0;
 }
 
+/*
+ * Create and initialize a cache for objects that are retrieved from and
+ * returned to an underlying mempool. This structure is identical to the
+ * local_cache[lcore_id] pointed to by the mempool structure.
+ */
+struct rte_mempool_cache *
+rte_mempool_cache_create(uint32_t size, int socket_id)
+{
+	struct rte_mempool_cache *cache;
+
+	if (size == 0 || size > RTE_MEMPOOL_CACHE_MAX_SIZE) {
+		rte_errno = EINVAL;
+		return NULL;
+	}
+
+	cache = rte_zmalloc_socket("MEMPOOL_CACHE", sizeof(*cache),
+				  RTE_CACHE_LINE_SIZE, socket_id);
+	if (cache == NULL) {
+		RTE_LOG(ERR, MEMPOOL, "Cannot allocate mempool cache.\n");
+		rte_errno = ENOMEM;
+		return NULL;
+	}
+
+	mempool_cache_init(cache, size);
+
+	return cache;
+}
+
+/*
+ * Free a cache. It's the responsibility of the user to make sure that any
+ * remaining objects in the cache are flushed to the corresponding
+ * mempool.
+ */
+void
+rte_mempool_cache_free(struct rte_mempool_cache *cache)
+{
+	rte_free(cache);
+}
+
 /* create an empty mempool */
 struct rte_mempool *
 rte_mempool_create_empty(const char *name, unsigned n, unsigned elt_size,

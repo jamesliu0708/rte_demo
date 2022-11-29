@@ -34,12 +34,23 @@ add_executable(tst_debug tst_debug.cc
                         )
 target_link_libraries(tst_debug gtest pthread)
 
-add_executable(tst_malloc_master tst_malloc_master.cc)
-target_link_directories(tst_malloc_master PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
-target_link_directories(tst_malloc_master PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
-target_link_libraries(tst_malloc_master rte_demo gtest pthread)
+add_executable(tst_malloc tst_malloc.cc)
+target_link_directories(tst_malloc PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
+target_link_directories(tst_malloc PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_malloc rte_demo gtest pthread)
 
-add_executable(tst_malloc_slave tst_malloc_slave.cc)
-target_link_directories(tst_malloc_slave PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../output)
-target_link_directories(tst_malloc_slave PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
-target_link_libraries(tst_malloc_slave rte_demo gtest pthread)
+add_executable(tst_memory tst_memory.cc)
+target_link_directories(tst_memory PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_memory rte_demo pthread)
+
+add_executable(tst_memzone tst_memzone.cc)
+target_link_directories(tst_memzone PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_memzone rte_demo gtest pthread)
+
+add_executable(tst_mempool tst_mempool.cc)
+target_link_directories(tst_mempool PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_mempool rte_demo gtest pthread)
+
+add_executable(tst_ring tst_ring.cc)
+target_link_directories(tst_ring PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_ring rte_demo gtest pthread)

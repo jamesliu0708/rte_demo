@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/james/work/rte_demo/unitest/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/home/james/cmake-3.20.6-linux-x86_64/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -84,6 +74,16 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/home/james/cmake-3.20.6-linux-x86_64/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -117,43 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named tst_malloc_slave
+# Target rules for targets named tst_atomic
 
 # Build rule for target.
-tst_malloc_slave: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_malloc_slave
-.PHONY : tst_malloc_slave
+tst_atomic: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_atomic
+.PHONY : tst_atomic
 
 # fast build rule for target.
-tst_malloc_slave/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/build
-.PHONY : tst_malloc_slave/fast
-
-#=============================================================================
-# Target rules for targets named tst_debug
-
-# Build rule for target.
-tst_debug: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_debug
-.PHONY : tst_debug
-
-# fast build rule for target.
-tst_debug/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/build
-.PHONY : tst_debug/fast
-
-#=============================================================================
-# Target rules for targets named tst_malloc_master
-
-# Build rule for target.
-tst_malloc_master: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_malloc_master
-.PHONY : tst_malloc_master
-
-# fast build rule for target.
-tst_malloc_master/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/build
-.PHONY : tst_malloc_master/fast
+tst_atomic/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_atomic.dir/build.make CMakeFiles/tst_atomic.dir/build
+.PHONY : tst_atomic/fast
 
 #=============================================================================
 # Target rules for targets named tst_memcpy
@@ -169,30 +143,17 @@ tst_memcpy/fast:
 .PHONY : tst_memcpy/fast
 
 #=============================================================================
-# Target rules for targets named tst_memcpy_perf
+# Target rules for targets named tst_debug
 
 # Build rule for target.
-tst_memcpy_perf: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_memcpy_perf
-.PHONY : tst_memcpy_perf
+tst_debug: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_debug
+.PHONY : tst_debug
 
 # fast build rule for target.
-tst_memcpy_perf/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/build
-.PHONY : tst_memcpy_perf/fast
-
-#=============================================================================
-# Target rules for targets named tst_atomic
-
-# Build rule for target.
-tst_atomic: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_atomic
-.PHONY : tst_atomic
-
-# fast build rule for target.
-tst_atomic/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_atomic.dir/build.make CMakeFiles/tst_atomic.dir/build
-.PHONY : tst_atomic/fast
+tst_debug/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_debug.dir/build.make CMakeFiles/tst_debug.dir/build
+.PHONY : tst_debug/fast
 
 #=============================================================================
 # Target rules for targets named tst_log
@@ -206,6 +167,84 @@ tst_log: cmake_check_build_system
 tst_log/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_log.dir/build.make CMakeFiles/tst_log.dir/build
 .PHONY : tst_log/fast
+
+#=============================================================================
+# Target rules for targets named tst_memcpy_perf
+
+# Build rule for target.
+tst_memcpy_perf: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_memcpy_perf
+.PHONY : tst_memcpy_perf
+
+# fast build rule for target.
+tst_memcpy_perf/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/build
+.PHONY : tst_memcpy_perf/fast
+
+#=============================================================================
+# Target rules for targets named tst_malloc
+
+# Build rule for target.
+tst_malloc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_malloc
+.PHONY : tst_malloc
+
+# fast build rule for target.
+tst_malloc/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/build
+.PHONY : tst_malloc/fast
+
+#=============================================================================
+# Target rules for targets named tst_ring
+
+# Build rule for target.
+tst_ring: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_ring
+.PHONY : tst_ring
+
+# fast build rule for target.
+tst_ring/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/build
+.PHONY : tst_ring/fast
+
+#=============================================================================
+# Target rules for targets named tst_memory
+
+# Build rule for target.
+tst_memory: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_memory
+.PHONY : tst_memory
+
+# fast build rule for target.
+tst_memory/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/build
+.PHONY : tst_memory/fast
+
+#=============================================================================
+# Target rules for targets named tst_memzone
+
+# Build rule for target.
+tst_memzone: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_memzone
+.PHONY : tst_memzone
+
+# fast build rule for target.
+tst_memzone/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/build
+.PHONY : tst_memzone/fast
+
+#=============================================================================
+# Target rules for targets named tst_mempool
+
+# Build rule for target.
+tst_mempool: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_mempool
+.PHONY : tst_mempool
+
+# fast build rule for target.
+tst_mempool/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/build
+.PHONY : tst_mempool/fast
 
 home/james/work/rte_demo/lib/common/eal_common_log.o: home/james/work/rte_demo/lib/common/eal_common_log.c.o
 .PHONY : home/james/work/rte_demo/lib/common/eal_common_log.o
@@ -330,53 +369,29 @@ tst_log.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_log.dir/build.make CMakeFiles/tst_log.dir/tst_log.cc.s
 .PHONY : tst_log.cc.s
 
-tst_malloc_master.o: tst_malloc_master.cc.o
-.PHONY : tst_malloc_master.o
+tst_malloc.o: tst_malloc.cc.o
+.PHONY : tst_malloc.o
 
 # target to build an object file
-tst_malloc_master.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/tst_malloc_master.cc.o
-.PHONY : tst_malloc_master.cc.o
+tst_malloc.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/tst_malloc.cc.o
+.PHONY : tst_malloc.cc.o
 
-tst_malloc_master.i: tst_malloc_master.cc.i
-.PHONY : tst_malloc_master.i
-
-# target to preprocess a source file
-tst_malloc_master.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/tst_malloc_master.cc.i
-.PHONY : tst_malloc_master.cc.i
-
-tst_malloc_master.s: tst_malloc_master.cc.s
-.PHONY : tst_malloc_master.s
-
-# target to generate assembly for a file
-tst_malloc_master.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_master.dir/build.make CMakeFiles/tst_malloc_master.dir/tst_malloc_master.cc.s
-.PHONY : tst_malloc_master.cc.s
-
-tst_malloc_slave.o: tst_malloc_slave.cc.o
-.PHONY : tst_malloc_slave.o
-
-# target to build an object file
-tst_malloc_slave.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/tst_malloc_slave.cc.o
-.PHONY : tst_malloc_slave.cc.o
-
-tst_malloc_slave.i: tst_malloc_slave.cc.i
-.PHONY : tst_malloc_slave.i
+tst_malloc.i: tst_malloc.cc.i
+.PHONY : tst_malloc.i
 
 # target to preprocess a source file
-tst_malloc_slave.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/tst_malloc_slave.cc.i
-.PHONY : tst_malloc_slave.cc.i
+tst_malloc.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/tst_malloc.cc.i
+.PHONY : tst_malloc.cc.i
 
-tst_malloc_slave.s: tst_malloc_slave.cc.s
-.PHONY : tst_malloc_slave.s
+tst_malloc.s: tst_malloc.cc.s
+.PHONY : tst_malloc.s
 
 # target to generate assembly for a file
-tst_malloc_slave.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc_slave.dir/build.make CMakeFiles/tst_malloc_slave.dir/tst_malloc_slave.cc.s
-.PHONY : tst_malloc_slave.cc.s
+tst_malloc.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_malloc.dir/build.make CMakeFiles/tst_malloc.dir/tst_malloc.cc.s
+.PHONY : tst_malloc.cc.s
 
 tst_memcpy.o: tst_memcpy.cc.o
 .PHONY : tst_memcpy.o
@@ -426,6 +441,102 @@ tst_memcpy_perf.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memcpy_perf.dir/build.make CMakeFiles/tst_memcpy_perf.dir/tst_memcpy_perf.cc.s
 .PHONY : tst_memcpy_perf.cc.s
 
+tst_memory.o: tst_memory.cc.o
+.PHONY : tst_memory.o
+
+# target to build an object file
+tst_memory.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/tst_memory.cc.o
+.PHONY : tst_memory.cc.o
+
+tst_memory.i: tst_memory.cc.i
+.PHONY : tst_memory.i
+
+# target to preprocess a source file
+tst_memory.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/tst_memory.cc.i
+.PHONY : tst_memory.cc.i
+
+tst_memory.s: tst_memory.cc.s
+.PHONY : tst_memory.s
+
+# target to generate assembly for a file
+tst_memory.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memory.dir/build.make CMakeFiles/tst_memory.dir/tst_memory.cc.s
+.PHONY : tst_memory.cc.s
+
+tst_mempool.o: tst_mempool.cc.o
+.PHONY : tst_mempool.o
+
+# target to build an object file
+tst_mempool.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/tst_mempool.cc.o
+.PHONY : tst_mempool.cc.o
+
+tst_mempool.i: tst_mempool.cc.i
+.PHONY : tst_mempool.i
+
+# target to preprocess a source file
+tst_mempool.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/tst_mempool.cc.i
+.PHONY : tst_mempool.cc.i
+
+tst_mempool.s: tst_mempool.cc.s
+.PHONY : tst_mempool.s
+
+# target to generate assembly for a file
+tst_mempool.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_mempool.dir/build.make CMakeFiles/tst_mempool.dir/tst_mempool.cc.s
+.PHONY : tst_mempool.cc.s
+
+tst_memzone.o: tst_memzone.cc.o
+.PHONY : tst_memzone.o
+
+# target to build an object file
+tst_memzone.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/tst_memzone.cc.o
+.PHONY : tst_memzone.cc.o
+
+tst_memzone.i: tst_memzone.cc.i
+.PHONY : tst_memzone.i
+
+# target to preprocess a source file
+tst_memzone.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/tst_memzone.cc.i
+.PHONY : tst_memzone.cc.i
+
+tst_memzone.s: tst_memzone.cc.s
+.PHONY : tst_memzone.s
+
+# target to generate assembly for a file
+tst_memzone.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_memzone.dir/build.make CMakeFiles/tst_memzone.dir/tst_memzone.cc.s
+.PHONY : tst_memzone.cc.s
+
+tst_ring.o: tst_ring.cc.o
+.PHONY : tst_ring.o
+
+# target to build an object file
+tst_ring.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/tst_ring.cc.o
+.PHONY : tst_ring.cc.o
+
+tst_ring.i: tst_ring.cc.i
+.PHONY : tst_ring.i
+
+# target to preprocess a source file
+tst_ring.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/tst_ring.cc.i
+.PHONY : tst_ring.cc.i
+
+tst_ring.s: tst_ring.cc.s
+.PHONY : tst_ring.s
+
+# target to generate assembly for a file
+tst_ring.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/tst_ring.cc.s
+.PHONY : tst_ring.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -437,10 +548,13 @@ help:
 	@echo "... tst_atomic"
 	@echo "... tst_debug"
 	@echo "... tst_log"
-	@echo "... tst_malloc_master"
-	@echo "... tst_malloc_slave"
+	@echo "... tst_malloc"
 	@echo "... tst_memcpy"
 	@echo "... tst_memcpy_perf"
+	@echo "... tst_memory"
+	@echo "... tst_mempool"
+	@echo "... tst_memzone"
+	@echo "... tst_ring"
 	@echo "... home/james/work/rte_demo/lib/common/eal_common_log.o"
 	@echo "... home/james/work/rte_demo/lib/common/eal_common_log.i"
 	@echo "... home/james/work/rte_demo/lib/common/eal_common_log.s"
@@ -456,18 +570,27 @@ help:
 	@echo "... tst_log.o"
 	@echo "... tst_log.i"
 	@echo "... tst_log.s"
-	@echo "... tst_malloc_master.o"
-	@echo "... tst_malloc_master.i"
-	@echo "... tst_malloc_master.s"
-	@echo "... tst_malloc_slave.o"
-	@echo "... tst_malloc_slave.i"
-	@echo "... tst_malloc_slave.s"
+	@echo "... tst_malloc.o"
+	@echo "... tst_malloc.i"
+	@echo "... tst_malloc.s"
 	@echo "... tst_memcpy.o"
 	@echo "... tst_memcpy.i"
 	@echo "... tst_memcpy.s"
 	@echo "... tst_memcpy_perf.o"
 	@echo "... tst_memcpy_perf.i"
 	@echo "... tst_memcpy_perf.s"
+	@echo "... tst_memory.o"
+	@echo "... tst_memory.i"
+	@echo "... tst_memory.s"
+	@echo "... tst_mempool.o"
+	@echo "... tst_mempool.i"
+	@echo "... tst_mempool.s"
+	@echo "... tst_memzone.o"
+	@echo "... tst_memzone.i"
+	@echo "... tst_memzone.s"
+	@echo "... tst_ring.o"
+	@echo "... tst_ring.i"
+	@echo "... tst_ring.s"
 .PHONY : help
 
 

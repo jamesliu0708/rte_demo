@@ -69,10 +69,24 @@ include CMakeFiles/rte_demo.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/rte_demo.dir/flags.make
 
+CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o: CMakeFiles/rte_demo.dir/flags.make
+CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o: ../driver/ring/rte_mempool_ring.c
+CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o -MF CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o.d -o CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o -c /home/james/work/rte_demo/lib/driver/ring/rte_mempool_ring.c
+
+CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/james/work/rte_demo/lib/driver/ring/rte_mempool_ring.c > CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.i
+
+CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/james/work/rte_demo/lib/driver/ring/rte_mempool_ring.c -o CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.s
+
 CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o: ../common/eal_common_cpuflags.c
 CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o -c /home/james/work/rte_demo/lib/common/eal_common_cpuflags.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.i: cmake_force
@@ -86,7 +100,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o: ../common/eal_common_errno.c
 CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o -c /home/james/work/rte_demo/lib/common/eal_common_errno.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_errno.c.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_errno.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o: ../common/eal_common_lcore.c
 CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o -c /home/james/work/rte_demo/lib/common/eal_common_lcore.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_log.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_log.c.o: ../common/eal_common_log.c
 CMakeFiles/rte_demo.dir/common/eal_common_log.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_log.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_log.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_log.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_log.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_log.c.o -c /home/james/work/rte_demo/lib/common/eal_common_log.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_log.c.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_log.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o: ../common/eal_common_memory.c
 CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_memory.c.o -c /home/james/work/rte_demo/lib/common/eal_common_memory.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_memory.c.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_memory.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o: ../common/eal_common_memzone.c
 CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.o -c /home/james/work/rte_demo/lib/common/eal_common_memzone.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_memzone.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_options.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_options.c.o: ../common/eal_common_options.c
 CMakeFiles/rte_demo.dir/common/eal_common_options.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_options.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_options.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_options.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_options.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_options.c.o -c /home/james/work/rte_demo/lib/common/eal_common_options.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_options.c.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_options.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o: ../common/eal_common_string_fns.c
 CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.o -c /home/james/work/rte_demo/lib/common/eal_common_string_fns.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_string_fns.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o: ../common/eal_common_tailqs.c
 CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.o -c /home/james/work/rte_demo/lib/common/eal_common_tailqs.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_tailqs.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o: ../common/eal_common_thread.c
 CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o -MF CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o.d -o CMakeFiles/rte_demo.dir/common/eal_common_thread.c.o -c /home/james/work/rte_demo/lib/common/eal_common_thread.c
 
 CMakeFiles/rte_demo.dir/common/eal_common_thread.c.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/rte_demo.dir/common/eal_common_thread.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/malloc_elem.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/malloc_elem.c.o: ../common/malloc_elem.c
 CMakeFiles/rte_demo.dir/common/malloc_elem.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/rte_demo.dir/common/malloc_elem.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/rte_demo.dir/common/malloc_elem.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/malloc_elem.c.o -MF CMakeFiles/rte_demo.dir/common/malloc_elem.c.o.d -o CMakeFiles/rte_demo.dir/common/malloc_elem.c.o -c /home/james/work/rte_demo/lib/common/malloc_elem.c
 
 CMakeFiles/rte_demo.dir/common/malloc_elem.c.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/rte_demo.dir/common/malloc_elem.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/malloc_heap.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/malloc_heap.c.o: ../common/malloc_heap.c
 CMakeFiles/rte_demo.dir/common/malloc_heap.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/rte_demo.dir/common/malloc_heap.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/rte_demo.dir/common/malloc_heap.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/malloc_heap.c.o -MF CMakeFiles/rte_demo.dir/common/malloc_heap.c.o.d -o CMakeFiles/rte_demo.dir/common/malloc_heap.c.o -c /home/james/work/rte_demo/lib/common/malloc_heap.c
 
 CMakeFiles/rte_demo.dir/common/malloc_heap.c.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/rte_demo.dir/common/malloc_heap.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/rte_malloc.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/rte_malloc.c.o: ../common/rte_malloc.c
 CMakeFiles/rte_demo.dir/common/rte_malloc.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/rte_demo.dir/common/rte_malloc.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/rte_demo.dir/common/rte_malloc.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/rte_malloc.c.o -MF CMakeFiles/rte_demo.dir/common/rte_malloc.c.o.d -o CMakeFiles/rte_demo.dir/common/rte_malloc.c.o -c /home/james/work/rte_demo/lib/common/rte_malloc.c
 
 CMakeFiles/rte_demo.dir/common/rte_malloc.c.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/rte_demo.dir/common/rte_malloc.c.s: cmake_force
 CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o: ../librte_ring/rte_ring.c
 CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o -MF CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o.d -o CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.o -c /home/james/work/rte_demo/lib/librte_ring/rte_ring.c
 
 CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.i: cmake_force
@@ -268,7 +282,7 @@ CMakeFiles/rte_demo.dir/librte_ring/rte_ring.c.s: cmake_force
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o: ../librte_mempool/rte_mempool.c
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o -MF CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o.d -o CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.o -c /home/james/work/rte_demo/lib/librte_mempool/rte_mempool.c
 
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.i: cmake_force
@@ -282,7 +296,7 @@ CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool.c.s: cmake_force
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o: ../librte_mempool/rte_mempool_ops.c
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o -MF CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o.d -o CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.o -c /home/james/work/rte_demo/lib/librte_mempool/rte_mempool_ops.c
 
 CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.i: cmake_force
@@ -296,7 +310,7 @@ CMakeFiles/rte_demo.dir/librte_mempool/rte_mempool_ops.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o: ../linuxapp/eal/eal.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.i: cmake_force
@@ -310,7 +324,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o: ../linuxapp/eal/eal_debug.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_debug.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.i: cmake_force
@@ -324,7 +338,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_debug.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o: ../linuxapp/eal/eal_hugepage_info.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_hugepage_info.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.i: cmake_force
@@ -338,7 +352,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_hugepage_info.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o: ../linuxapp/eal/eal_lcore.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_lcore.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.i: cmake_force
@@ -352,7 +366,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_lcore.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o: ../linuxapp/eal/eal_log.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_log.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.i: cmake_force
@@ -366,7 +380,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_log.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o: ../linuxapp/eal/eal_memory.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_memory.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.i: cmake_force
@@ -380,7 +394,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_memory.c.s: cmake_force
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o: ../linuxapp/eal/eal_thread.c
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o -MF CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o.d -o CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o -c /home/james/work/rte_demo/lib/linuxapp/eal/eal_thread.c
 
 CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.i: cmake_force
@@ -394,7 +408,7 @@ CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.s: cmake_force
 CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o: CMakeFiles/rte_demo.dir/flags.make
 CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o: ../common/arch/x86/rte_cpuflags.c
 CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o: CMakeFiles/rte_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o -MF CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o.d -o CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o -c /home/james/work/rte_demo/lib/common/arch/x86/rte_cpuflags.c
 
 CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.i: cmake_force
@@ -407,6 +421,7 @@ CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.s: cmake_force
 
 # Object files for target rte_demo
 rte_demo_OBJECTS = \
+"CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o" \
 "CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o" \
 "CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o" \
 "CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o" \
@@ -435,6 +450,7 @@ rte_demo_OBJECTS = \
 # External object files for target rte_demo
 rte_demo_EXTERNAL_OBJECTS =
 
+librte_demo.so: CMakeFiles/rte_demo.dir/driver/ring/rte_mempool_ring.c.o
 librte_demo.so: CMakeFiles/rte_demo.dir/common/eal_common_cpuflags.c.o
 librte_demo.so: CMakeFiles/rte_demo.dir/common/eal_common_errno.c.o
 librte_demo.so: CMakeFiles/rte_demo.dir/common/eal_common_lcore.c.o
@@ -461,7 +477,7 @@ librte_demo.so: CMakeFiles/rte_demo.dir/linuxapp/eal/eal_thread.c.o
 librte_demo.so: CMakeFiles/rte_demo.dir/common/arch/x86/rte_cpuflags.c.o
 librte_demo.so: CMakeFiles/rte_demo.dir/build.make
 librte_demo.so: CMakeFiles/rte_demo.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking C shared library librte_demo.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/james/work/rte_demo/lib/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking C shared library librte_demo.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rte_demo.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
