@@ -1,3 +1,0 @@
-/home/james/work/rte_demo/lib/build/CMakeFiles/rebuild_cache.dir
-/home/james/work/rte_demo/lib/build/CMakeFiles/edit_cache.dir
-/home/james/work/rte_demo/lib/build/CMakeFiles/rte_demo.dir
