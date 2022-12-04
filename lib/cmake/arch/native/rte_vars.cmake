@@ -4,14 +4,14 @@ set(MACHINE_CFLAGS native)
 # reported by compiler. If not, check if the CPU actually supports it, and if
 # so, set the compilation target to be a corei7, minimum target with SSE4.2.
 execute_process(
-    COMMAND bash -c "${CMAKE_C_COMPILER} -march=native -dM -E - </dev/null| grep SSE4_2"
+    COMMAND bash -c "${CC} -march=native -dM -E - </dev/null| grep SSE4_2"
     OUTPUT_VARIABLE SSE42_SUPPORT
 )
 if(${SSE42_SUPPORT} STREQUAL "")
     set(MACHINE_CFLAGS corei7)
 endif()
 execute_process(
-    COMMAND bash -c "${CMAKE_C_COMPILER} -march=${MACHINE_CFLAGS} -dM -E - </dev/null"
+    COMMAND bash -c "${CC} -march=${MACHINE_CFLAGS} -dM -E - </dev/null"
     OUTPUT_VARIABLE AUTO_CPUFLAGS
 )
 set (CPUFLAGS )
