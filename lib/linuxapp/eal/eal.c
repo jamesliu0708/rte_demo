@@ -637,12 +637,12 @@ rte_eal_init(int argc, char **argv)
 	static rte_atomic32_t run_once = RTE_ATOMIC32_INIT(0);
 	const char *logid;
 
-	// /* checks if the machine is adequate */
-	// if (!rte_cpu_is_supported()) {
-	// 	rte_eal_init_alert("unsupported cpu type.");
-	// 	rte_errno = ENOTSUP;
-	// 	return -1;
-	// }
+	/* checks if the machine is adequate */
+	if (!rte_cpu_is_supported()) {
+		rte_eal_init_alert("unsupported cpu type.");
+		rte_errno = ENOTSUP;
+		return -1;
+	}
 
 	if (!rte_atomic32_test_and_set(&run_once)) {
 		rte_eal_init_alert("already called initialization.");

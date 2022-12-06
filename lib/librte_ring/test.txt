@@ -1,0 +1,5 @@
+while (ring.get()) {
+    __asm__ volatile ("pause":::"memory");
+}
+timefd
+process()
