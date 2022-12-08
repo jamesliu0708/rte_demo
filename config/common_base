@@ -1,0 +1,162 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright(c) 2010-2017 Intel Corporation
+
+#
+# define executive environment
+# RTE_EXEC_ENV values are the directories in mk/exec-env/
+#
+CONFIG_RTE_EXEC_ENV=
+
+#
+# define the architecture we compile for.
+# RTE_ARCH values are the directories in mk/arch/
+#
+CONFIG_RTE_ARCH=
+
+#
+# machine can define specific variables or action for a specific board
+# RTE_MACHINE values are the directories in mk/machine/
+#
+CONFIG_RTE_MACHINE=
+
+#
+# The compiler we use.
+# RTE_TOOLCHAIN values are the directories in mk/toolchain/
+#
+CONFIG_RTE_TOOLCHAIN=
+
+#
+# Use intrinsics or assembly code for key routines
+#
+CONFIG_RTE_FORCE_INTRINSICS=n
+
+#
+# Machine forces strict alignment constraints.
+#
+CONFIG_RTE_ARCH_STRICT_ALIGN=n
+
+#
+# Compile to share library
+#
+CONFIG_RTE_BUILD_SHARED_LIB=n
+
+#
+# Use newest code breaking previous ABI
+#
+CONFIG_RTE_NEXT_ABI=y
+
+#
+# Major ABI to overwrite library specific LIBABIVER
+#
+CONFIG_RTE_MAJOR_ABI=
+
+#
+# Machine's cache line size
+#
+CONFIG_RTE_CACHE_LINE_SIZE=64
+
+#
+# Compile Environment Abstraction Layer
+#
+CONFIG_RTE_LIBRTE_EAL=y
+CONFIG_RTE_MAX_LCORE=128
+CONFIG_RTE_MAX_NUMA_NODES=8
+CONFIG_RTE_MAX_MEMSEG=256
+CONFIG_RTE_MAX_MEMZONE=2560
+CONFIG_RTE_MAX_TAILQ=32
+CONFIG_RTE_ENABLE_ASSERT=n
+CONFIG_RTE_LOG_DP_LEVEL=RTE_LOG_INFO
+CONFIG_RTE_LOG_HISTORY=256
+CONFIG_RTE_BACKTRACE=y
+CONFIG_RTE_LIBEAL_USE_HPET=n
+CONFIG_RTE_EAL_ALLOW_INV_SOCKET_ID=n
+CONFIG_RTE_EAL_ALWAYS_PANIC_ON_ERROR=n
+CONFIG_RTE_MAX_VFIO_GROUPS=64
+CONFIG_RTE_MALLOC_DEBUG=n
+CONFIG_RTE_EAL_NUMA_AWARE_HUGEPAGES=n
+
+#
+# Recognize/ignore the AVX/AVX512 CPU flags for performance/power testing.
+# AVX512 is marked as experimental for now, will enable it after enough
+# field test and possible optimization.
+#
+CONFIG_RTE_ENABLE_AVX=y
+CONFIG_RTE_ENABLE_AVX512=n
+
+# Default driver path (or "" to disable)
+CONFIG_RTE_EAL_PMD_PATH=""
+
+#
+# Compile software PMD backed by SZEDATA2 device
+#
+CONFIG_RTE_LIBRTE_PMD_SZEDATA2=n
+#
+# Defines firmware type address space.
+# See documentation for supported values.
+# Other values raise compile time error.
+CONFIG_RTE_LIBRTE_PMD_SZEDATA2_AS=0
+
+#
+# Number of sessions to create in the session memory pool
+# on a single QuickAssist device.
+#
+CONFIG_RTE_QAT_PMD_MAX_NB_SESSIONS=2048
+
+#
+# Compile librte_ring
+#
+CONFIG_RTE_LIBRTE_RING=y
+CONFIG_RTE_RING_USE_C11_MEM_MODEL=n
+
+#
+# Compile librte_mempool
+#
+CONFIG_RTE_LIBRTE_MEMPOOL=y
+CONFIG_RTE_MEMPOOL_CACHE_MAX_SIZE=512
+CONFIG_RTE_LIBRTE_MEMPOOL_DEBUG=n
+
+#
+# Compile Mempool drivers
+#
+CONFIG_RTE_DRIVER_MEMPOOL_RING=y
+CONFIG_RTE_DRIVER_MEMPOOL_STACK=y
+
+#
+# Compile librte_mbuf
+#
+CONFIG_RTE_LIBRTE_MBUF=y
+CONFIG_RTE_LIBRTE_MBUF_DEBUG=n
+CONFIG_RTE_MBUF_DEFAULT_MEMPOOL_OPS="ring_mp_mc"
+CONFIG_RTE_MBUF_REFCNT_ATOMIC=y
+CONFIG_RTE_PKTMBUF_HEADROOM=128
+
+#
+# Compile librte_timer
+#
+CONFIG_RTE_LIBRTE_TIMER=y
+CONFIG_RTE_LIBRTE_TIMER_DEBUG=n
+
+#
+# Compile librte_member
+#
+CONFIG_RTE_LIBRTE_MEMBER=y
+
+#
+# Compile librte_jobstats
+#
+CONFIG_RTE_LIBRTE_JOBSTATS=y
+
+#
+# Compile the device metrics library
+#
+CONFIG_RTE_LIBRTE_METRICS=y
+
+#
+# Compile the bitrate statistics library
+#
+CONFIG_RTE_LIBRTE_BITRATE=y
+
+#
+# Compile the latency statistics library
+#
+CONFIG_RTE_LIBRTE_LATENCY_STATS=y
