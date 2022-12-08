@@ -3,5 +3,10 @@ execute_process(
 )
 
 execute_process(
-    COMMAND bash -c 
+    COMMAND bash -c "rm -rf ${RTE_OUTPUT}/include ${RTE_OUTPUT}/lib"
+)
+
+execute_process(
+    COMMAND bash -c "${RTE_SDK}/script/gen-config-h.sh ${RTE_OUTPUT}/.config    \
+                    > ${RTE_OUTPUT}/include/rte_config.h"
 )

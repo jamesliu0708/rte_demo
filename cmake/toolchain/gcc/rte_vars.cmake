@@ -43,7 +43,7 @@ if (NOT "$(CONFIG_RTE_ARCH_STRICT_ALIGN)" STREQUAL "")
     set(WERROR_FLAGS ${WERROR_FLAGS}" -Wno-error=cast-align")
 endif ()
 
-include (rte_toolchain_compat.cmake)
+include (${CMAKE_CURRENT_LIST_DIR}/rte_toolchain_compat.cmake)
 
 execute_process(
     COMMAND bash -c "test $(GCC_VERSION) -gt 70 && echo 1"

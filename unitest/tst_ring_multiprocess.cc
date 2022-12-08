@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define RING_SIZE 4096
 #define MEMPOOL_ELT_SIZE 2048
@@ -14,6 +15,11 @@
 #define MEMPOOL_SIZE ((rte_lcore_count()*(MAX_KEEP+RTE_MEMPOOL_CACHE_MAX_SIZE))-1)
 
 const static int duration = 1000000000;
+
+struct DynamicBlock {
+    bool dynamic;
+    int num;
+};
 
 static inline uint64_t
 rte_rdtsc(void)
@@ -49,10 +55,11 @@ static void
 my_obj_init(struct rte_mempool *mp, __attribute__((unused)) void *arg,
 	    void *obj, unsigned i)
 {
-	uint32_t *objnum = (uint32_t*)obj;
+	struct DynamicBlock *dynamic_block = (struct DynamicBlock*)obj;
 
 	memset(obj, 0, mp->elt_size);
-	*objnum = i;
+	dynamic_block->dynamic = false;
+    dynamic_block->num = i;
 }
 
 void run_single_producer()
@@ -73,19 +80,23 @@ void run_single_producer()
     if (ring == NULL) {
         fprintf(stderr, "Failed to create ring\n");
     }
-    for(int i = 0; i < RING_SIZE * 2; ++i) {
-        if (rte_mempool_get(mp_spsc, &obj) == NULL) {
+    int obj_count = MEMPOOL_SIZE;
+    for(int i = 0; i < RING_SIZE; ++i) {
+        struct DynamicBlock* dynamic_block;
+        if (rte_mempool_get(mp_spsc, &obj) != 0) {
             obj = rte_malloc(NULL, MEMPOOL_ELT_SIZE, 0);
             if (obj == NULL) {
                 fprintf(stderr, "Failed to get obj\n");
                 exit(-1);
             }
+            dynamic_block = (struct DynamicBlock*)obj;
+            dynamic_block->dynamic = true;
+            dynamic_block->num = obj_count++;
         }
-        int* val = (int*)obj;
-        *val = i;
-        while (te_ring_enqueue(ring, obj) != 0)
+        dynamic_block = (struct DynamicBlock*)obj;
+        while (rte_ring_enqueue(ring, obj) != 0)
             asm volatile("pause":::"memory");
-        fprintf(stdout, "produce %i\n", i);
+        fprintf(stdout, "produce %d obj num %d\n", i, dynamic_block->num);
     }
 }
 
@@ -101,11 +112,16 @@ void run_single_consumer()
         fprintf(stderr, "Failed to find ring\n");
         exit(-1);
     }
-    for(int i = 0; i < RING_SIZE * 2; ++i) {
+    for(int i = 0; i < RING_SIZE; ++i) {
         void * obj;
         while(rte_ring_dequeue(ring, &obj) != 0)
             asm volatile("pause":::"memory");
-        if (rte_mempool_put(mp_spsc, obj) )
+        struct DynamicBlock* dynamic_block = (struct DynamicBlock*)obj;
+        if (dynamic_block->dynamic) {
+            rte_free(dynamic_block);
+        }
+        fprintf(stdout, "recv obj %d objnum %d\n", i, dynamic_block->num);
+        rte_mempool_put(mp_spsc, obj);
     }
 }
 
@@ -130,7 +146,7 @@ int main(int argc,char** argv)
             fprintf(stderr, "Failed to attach rte\n");
             exit(-1);
         }
-        sleep(5);
+        sleep(10);
         run_single_consumer();
     }
     return 0;

@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.10)
 project(unitest)
 add_compile_options(-mssse3)
-# add_compile_options(-O3 -march=native)
+add_compile_options(-O3)
 add_compile_options(-O0 -ggdb)
 
 # add_subdirectory(googletest)
 
 add_link_options(-rdynamic)
+add_compile_options(-mfma -mavx)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../lib/common)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/../lib/common/arch/x86)
@@ -54,3 +55,7 @@ target_link_libraries(tst_mempool rte_demo gtest pthread)
 add_executable(tst_ring tst_ring.cc)
 target_link_directories(tst_ring PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
 target_link_libraries(tst_ring rte_demo gtest pthread)
+
+add_executable(tst_multi tst_ring_multiprocess.cc)
+target_link_directories(tst_multi PRIVATE ${CMAKE_CURRENT_LIST_DIR}/../lib/build)
+target_link_libraries(tst_multi rte_demo pthread)

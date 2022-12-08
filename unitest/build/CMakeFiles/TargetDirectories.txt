@@ -1,4 +1,5 @@
 /home/james/work/rte_demo/unitest/build/CMakeFiles/rebuild_cache.dir
+/home/james/work/rte_demo/unitest/build/CMakeFiles/tst_multi.dir
 /home/james/work/rte_demo/unitest/build/CMakeFiles/tst_atomic.dir
 /home/james/work/rte_demo/unitest/build/CMakeFiles/tst_memcpy.dir
 /home/james/work/rte_demo/unitest/build/CMakeFiles/tst_debug.dir

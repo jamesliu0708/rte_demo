@@ -43,6 +43,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/tst_multi.dir/DependInfo.cmake"
   "CMakeFiles/tst_atomic.dir/DependInfo.cmake"
   "CMakeFiles/tst_memcpy.dir/DependInfo.cmake"
   "CMakeFiles/tst_debug.dir/DependInfo.cmake"

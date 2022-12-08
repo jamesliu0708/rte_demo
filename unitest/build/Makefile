@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named tst_multi
+
+# Build rule for target.
+tst_multi: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tst_multi
+.PHONY : tst_multi
+
+# fast build rule for target.
+tst_multi/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/build
+.PHONY : tst_multi/fast
+
+#=============================================================================
 # Target rules for targets named tst_atomic
 
 # Build rule for target.
@@ -537,6 +550,30 @@ tst_ring.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/tst_ring.cc.s
 .PHONY : tst_ring.cc.s
 
+tst_ring_multiprocess.o: tst_ring_multiprocess.cc.o
+.PHONY : tst_ring_multiprocess.o
+
+# target to build an object file
+tst_ring_multiprocess.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/tst_ring_multiprocess.cc.o
+.PHONY : tst_ring_multiprocess.cc.o
+
+tst_ring_multiprocess.i: tst_ring_multiprocess.cc.i
+.PHONY : tst_ring_multiprocess.i
+
+# target to preprocess a source file
+tst_ring_multiprocess.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/tst_ring_multiprocess.cc.i
+.PHONY : tst_ring_multiprocess.cc.i
+
+tst_ring_multiprocess.s: tst_ring_multiprocess.cc.s
+.PHONY : tst_ring_multiprocess.s
+
+# target to generate assembly for a file
+tst_ring_multiprocess.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/tst_ring_multiprocess.cc.s
+.PHONY : tst_ring_multiprocess.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -554,6 +591,7 @@ help:
 	@echo "... tst_memory"
 	@echo "... tst_mempool"
 	@echo "... tst_memzone"
+	@echo "... tst_multi"
 	@echo "... tst_ring"
 	@echo "... home/james/work/rte_demo/lib/common/eal_common_log.o"
 	@echo "... home/james/work/rte_demo/lib/common/eal_common_log.i"
@@ -591,6 +629,9 @@ help:
 	@echo "... tst_ring.o"
 	@echo "... tst_ring.i"
 	@echo "... tst_ring.s"
+	@echo "... tst_ring_multiprocess.o"
+	@echo "... tst_ring_multiprocess.i"
+	@echo "... tst_ring_multiprocess.s"
 .PHONY : help
 
 

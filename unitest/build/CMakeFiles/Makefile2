@@ -63,6 +63,7 @@ CMAKE_BINARY_DIR = /home/james/work/rte_demo/unitest/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/tst_multi.dir/all
 all: CMakeFiles/tst_atomic.dir/all
 all: CMakeFiles/tst_memcpy.dir/all
 all: CMakeFiles/tst_debug.dir/all
@@ -80,6 +81,7 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/tst_multi.dir/clean
 clean: CMakeFiles/tst_atomic.dir/clean
 clean: CMakeFiles/tst_memcpy.dir/clean
 clean: CMakeFiles/tst_debug.dir/clean
@@ -91,6 +93,32 @@ clean: CMakeFiles/tst_memory.dir/clean
 clean: CMakeFiles/tst_memzone.dir/clean
 clean: CMakeFiles/tst_mempool.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tst_multi.dir
+
+# All Build rule for target.
+CMakeFiles/tst_multi.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=22,23 "Built target tst_multi"
+.PHONY : CMakeFiles/tst_multi.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tst_multi.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tst_multi.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/james/work/rte_demo/unitest/build/CMakeFiles 0
+.PHONY : CMakeFiles/tst_multi.dir/rule
+
+# Convenience name for target.
+tst_multi: CMakeFiles/tst_multi.dir/rule
+.PHONY : tst_multi
+
+# clean rule for target.
+CMakeFiles/tst_multi.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_multi.dir/build.make CMakeFiles/tst_multi.dir/clean
+.PHONY : CMakeFiles/tst_multi.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/tst_atomic.dir
@@ -255,7 +283,7 @@ CMakeFiles/tst_malloc.dir/clean:
 CMakeFiles/tst_ring.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tst_ring.dir/build.make CMakeFiles/tst_ring.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=22,23 "Built target tst_ring"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/james/work/rte_demo/unitest/build/CMakeFiles --progress-num=24,25 "Built target tst_ring"
 .PHONY : CMakeFiles/tst_ring.dir/all
 
 # Build rule for subdir invocation for target.
