@@ -1,10 +1,10 @@
 if (NOT DEFINE RTE_SDK)
-    set(RTE_SDK ${CMAKE_CURRENT_LIST_DIR})
+    set(RTE_SDK ${CMAKE_CURRENT_LIST_DIR}/../)
 endif ()
 
 if (NOT DEFINE RTE_OUTPUT)
-    set(RTE_SDK ${CMAKE_CURRENT_LIST_DIR})
-endif()
+    set(RTE_OUTPUT ${CMAKE_CURRENT_LIST_DIR}/../build)
+endif ()
 
 if (NOT DEFINE RTE_CONFIG_TEMPLATE)
     execute_process(
@@ -19,7 +19,7 @@ if (NOT DEFINE RTE_CONFIG_TEMPLATE)
                     print "x86_64-native"} \
             else { \
                     printf "%s-native", $$0} }'"
-        OUTPUT_VARIABLE ARCH_TMP
+        OUTPUT_VARIABLE ARCH_MACHINE_TMP
     )
     execute_process(
         COMMAND bash -c "uname | awk '{ \
@@ -39,13 +39,28 @@ if (NOT DEFINE RTE_CONFIG_TEMPLATE)
 		}'"
         OUTPUT_VARIABLE COMPILER_TMP
     )
-    set(RTE_CONFIG_TEMPLATE ${RTE_SDK}/config/deconfig_${ARCH_TMP}-${OSAPP_TMP}-${COMPILER_TMP})
+    set(RTE_CONFIG_TEMPLATE ${RTE_SDK}/config/deconfig_${ARCH_MACHINE_TMP}-${OSAPP_TMP}-${COMPILER_TMP})
     if (NOT EXISTS ${RTE_CONFIG_TEMPLATE})
         message(FATAL_ERROR "${RTE_CONFIG_TEMPLATE} does not exist")
     endif ()
 endif ()
 
-include (${CMAKE_CURRENT_LIST_DIR}/rte.sdkconfig.cmake)
-include (${CMAKE_CURRENT_LIST_DIR}/toolchain/rte_vars.cmake)
-include ()
-    
+execute_process(
+    COMMAND bash -c "
+        echo ${ARCH_MACHINE_TMP} | cut -d '-' -f1
+    "
+    OUTPUT_VARIABLE ARCH_TMP
+)
+
+execute_process(
+    COMMAND bash -c "
+        echo ${ARCH_MACHINE_TMP} | cut -d '-' -f2
+    "
+    OUTPUT_VARIABLE MACHINE_TMP
+)
+
+include (${RTE_SDK}/cmake/rte.sdkconfig.cmake)
+include (${RTE_SDK}/cmake/toolchain/${COMPILER_TMP}/rte_vars.cmake)
+include (${RTE_SDK}/cmake/arch/${ARCH_TMP}/rte_vars.cmake)
+include (${RTE_SDK}/cmake/execc_env/${OSAPP_TMP}/rte_vars.cmake)
+include (${RTE_SDK}/cmake/machine/${MACHINE_TMP}/rte_vars.cmake)
