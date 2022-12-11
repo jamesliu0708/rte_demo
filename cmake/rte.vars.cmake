@@ -59,6 +59,17 @@ execute_process(
     OUTPUT_VARIABLE MACHINE_TMP
 )
 
+if (NOT CONFIG_RTE_BUILD_SHARED_LIB STREQUAL "y")
+    set(RTE_BUILD_SHARED_LIB y)
+    execute_process(COMMAND bash -c "
+        sed -i -e'$ a\CONFIG_RTE_BUILD_SHARED_LIB=y' ${RTE_SDK}/config/common_base 
+    ")
+else ()
+    execute_process(COMMAND bash -c "
+        sed -i -e'$ a\CONFIG_RTE_BUILD_SHARED_LIB=n' ${RTE_SDK}/config/common_base 
+        ")
+endif ()
+
 include (${RTE_SDK}/cmake/rte.sdkconfig.cmake)
 include (${RTE_SDK}/cmake/toolchain/${COMPILER_TMP}/rte_vars.cmake)
 include (${RTE_SDK}/cmake/arch/${ARCH_TMP}/rte_vars.cmake)

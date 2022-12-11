@@ -83,9 +83,6 @@ CONFIG_RTE_EAL_NUMA_AWARE_HUGEPAGES=n
 CONFIG_RTE_ENABLE_AVX=y
 CONFIG_RTE_ENABLE_AVX512=n
 
-# Default driver path (or "" to disable)
-CONFIG_RTE_EAL_PMD_PATH=""
-
 #
 # Compile software PMD backed by SZEDATA2 device
 #
@@ -120,43 +117,3 @@ CONFIG_RTE_LIBRTE_MEMPOOL_DEBUG=n
 #
 CONFIG_RTE_DRIVER_MEMPOOL_RING=y
 CONFIG_RTE_DRIVER_MEMPOOL_STACK=y
-
-#
-# Compile librte_mbuf
-#
-CONFIG_RTE_LIBRTE_MBUF=y
-CONFIG_RTE_LIBRTE_MBUF_DEBUG=n
-CONFIG_RTE_MBUF_DEFAULT_MEMPOOL_OPS="ring_mp_mc"
-CONFIG_RTE_MBUF_REFCNT_ATOMIC=y
-CONFIG_RTE_PKTMBUF_HEADROOM=128
-
-#
-# Compile librte_timer
-#
-CONFIG_RTE_LIBRTE_TIMER=y
-CONFIG_RTE_LIBRTE_TIMER_DEBUG=n
-
-#
-# Compile librte_member
-#
-CONFIG_RTE_LIBRTE_MEMBER=y
-
-#
-# Compile librte_jobstats
-#
-CONFIG_RTE_LIBRTE_JOBSTATS=y
-
-#
-# Compile the device metrics library
-#
-CONFIG_RTE_LIBRTE_METRICS=y
-
-#
-# Compile the bitrate statistics library
-#
-CONFIG_RTE_LIBRTE_BITRATE=y
-
-#
-# Compile the latency statistics library
-#
-CONFIG_RTE_LIBRTE_LATENCY_STATS=y

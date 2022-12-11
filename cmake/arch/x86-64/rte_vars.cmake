@@ -16,9 +16,9 @@
 # examples for CONFIG_RTE_ARCH: i686, x86_64, x86_64_32
 #
 
-set(ARCH x86_64)
-set(CPU_CFLAGS -m64)
-set(CPU_ASFLAGS -felf64)
+set(RTE_ARCH x86_64)
+set(RTE_CPU_CFLAGS -m64)
+set(RTE_CPU_ASFLAGS -felf64)
 
 set(RTE_OBJCOPY_TARGET elf64-x86-64)
 set(RTE_OBJCOPY_ARCH i386:x86-64)
